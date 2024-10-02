@@ -1,0 +1,1 @@
+# plugins-product-variant-table-for-woocommerce
