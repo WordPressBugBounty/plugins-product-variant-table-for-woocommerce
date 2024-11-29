@@ -28,7 +28,7 @@ if( !class_exists('PVTFW_CART' ) ):
 
         function ajax_wc_button_script() {
         ?>
-            <script id="pvtfw-add-to-cart-js">
+            <script id="pvtfw-add-to-cart-js" type="text/javascript">
             jQuery(document).ready(function($) {
                 $(document.body).on('click', '.pvtfw_variant_table_cart_btn', function(e) {
                     e.preventDefault();
@@ -212,12 +212,11 @@ if( !class_exists('PVTFW_CART' ) ):
                     }
                     $fragments['notices_html'] = ob_get_clean();
 
-                    wc_clear_notices();
-
-                    return $fragments;
-                else:
-                    return false;
                 endif;
+
+                wc_clear_notices();
+
+                return $fragments;
         }
 
         /**

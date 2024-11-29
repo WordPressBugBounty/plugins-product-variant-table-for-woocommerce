@@ -31,7 +31,19 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
             if( apply_filters( 'disable_pvt_to_apply', false ) ){
                 return;
             }
+            // Print the prepared variation table
+            $this->prepare_variation_table();
 
+        }
+
+        /**
+        *====================================================
+        * Prepare Table Data 
+        * 
+        * @since in 1.6.0
+        *====================================================
+        **/
+        public function prepare_variation_table(){
             global $product;
 
             if( is_a( $product, 'WC_Product_Variable' ) ) {  
@@ -52,94 +64,95 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
                     'id' => $product_id
                 );
 
-        ?>
-        <h2 id="variant-table">
-            <?php echo esc_html( apply_filters('pvtfw_variant_table_varaints_heading', __('Available Options', 'product-variant-table-for-woocommerce')) ); ?>
-        </h2>
+                ?>
+                <h2 id="variant-table">
+                    <?php echo esc_html( apply_filters('pvtfw_variant_table_varaints_heading', __('Available Options', 'product-variant-table-for-woocommerce')) ); ?>
+                </h2>
 
-        <?php
+                <?php
 
-        // Hook to display anything before the table
-        do_action('pvtfw_variation_table_before');
+                // Hook to display anything before the table
+                do_action('pvtfw_variation_table_before');
 
-        // Scrollable classes adding
-        $scrollableTableX = PVTFW_COMMON::pvtfw_get_options()->scrollableTableX;
-        if($scrollableTableX == 'on') {
-            $data = ['pvt-scroll-x'];
-            $classes = PVTFW_COMMON::container( $data );
-        }
-        else{
-            $classes = '';
-        }
-        ?>
-        <div class="pvtfw_init_variation_table">
-            <?php
+                // Scrollable classes adding
+                $scrollableTableX = PVTFW_COMMON::pvtfw_get_options()->scrollableTableX;
+                if($scrollableTableX == 'on') {
+                    $data = ['pvt-scroll-x'];
+                    $classes = PVTFW_COMMON::container( $data );
+                }
+                else{
+                    $classes = '';
+                }
+                ?>
+                <div class="pvtfw_init_variation_table">
+                    <?php
 
-            /**
-             * @hook: pvtfw_before_table_block
-             * 
-             * { Before table block }
-             * 
-             */
-            do_action('pvtfw_before_table_block');
+                    /**
+                     * @hook: pvtfw_before_table_block
+                     * 
+                     * { Before table block }
+                     * 
+                     */
+                    do_action('pvtfw_before_table_block');
 
-            ?>
-            <div class="pvtfw_variant_table_block <?php echo esc_attr( apply_filters('pvtfw_table_container_class', $classes, $scrollableTableX) ); ?>">
-                <table class="variant">
-                    <thead>
-                        <tr>
-                            <?php 
-                            $showTableHeader = PVTFW_COMMON::pvtfw_get_options()->showTableHeader;
-                            if($showTableHeader == "on"):
-                                /**
-                                 * Hook: pvtfw_table_header.
-                                 *
-                                 * @hooked pvtfw_print_table_header - 29
-                                 * (inc/table-parts/content-thead.php)
-                                 */
-                                do_action('pvtfw_table_header', $atts);
-                            endif;
-                            ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                            /**
-                             * Hook: pvtfw_table_body.
-                             *
-                             * @hooked pvtfw_print_table_data - 29
-                             * (inc/table-parts/content-tbody.php)
-                             */
-                            do_action('pvtfw_table_body', $atts);
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+                    ?>
+                    <div class="pvtfw_variant_table_block <?php echo esc_attr( apply_filters('pvtfw_table_container_class', $classes, $scrollableTableX) ); ?>">
+                        <table class="variant">
+                            <thead>
+                                <tr>
+                                    <?php 
+                                    $showTableHeader = PVTFW_COMMON::pvtfw_get_options()->showTableHeader;
+                                    if($showTableHeader == "on"):
+                                        /**
+                                         * Hook: pvtfw_table_header.
+                                         *
+                                         * @hooked pvtfw_print_table_header - 29
+                                         * (inc/table-parts/content-thead.php)
+                                         */
+                                        do_action('pvtfw_table_header', $atts);
+                                    endif;
+                                    ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                    /**
+                                     * Hook: pvtfw_table_body.
+                                     *
+                                     * @hooked pvtfw_print_table_data - 29
+                                     * (inc/table-parts/content-tbody.php)
+                                     */
+                                    do_action('pvtfw_table_body', $atts);
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
 
-            <?php
+                    <?php
 
-            /**
-             * @hook: pvtfw_after_table_block
-             * 
-             * { After table block }
-             * 
-             */
-            do_action('pvtfw_after_table_block');
+                    /**
+                     * @hook: pvtfw_after_table_block
+                     * 
+                     * { After table block }
+                     * 
+                     */
+                    do_action('pvtfw_after_table_block');
 
-            ?>
+                    ?>
 
-        </div>
+                </div>
 
-        <?php
-                // Hook to display anything after the table
-                do_action('pvtfw_variation_table_after');
+                <?php
+                        // Hook to display anything after the table
+                        do_action('pvtfw_variation_table_after');
 
+                    }
+                    else {
+                        wp_dequeue_script('pvtfw-frontend-scripts');
+                        wp_dequeue_script('pvtfw-frontend-style');
             }
-            else {
-                wp_dequeue_script('pvtfw-frontend-scripts');
-                wp_dequeue_script('pvtfw-frontend-style');
-            }
         }
+
         /**
         *====================================================
         * Render Table as shortcode
@@ -149,9 +162,15 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
         * @return     <mixed>  ( Either display variation table using the global `$product->get_id()` or Product ID parameter from the shortcode )
         * 
         * @revised in 1.4.20
+        * @revised in 1.6.0: changed the print_table method with prepare_variation_table
         *====================================================
         **/
         public function shortcode_print_table( $atts ){
+
+            // Default is `false` to apply table markup and feature
+            if( apply_filters( 'disable_pvt_shortcode_to_apply', false ) ){
+                return;
+            }
 
             if( !empty( $atts ) && isset( $atts["id"] ) ){
 
@@ -275,7 +294,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
             }
             else{
                 ob_start();
-                $this->print_table();
+                $this->prepare_variation_table();
                 return ob_get_clean();
             }
 

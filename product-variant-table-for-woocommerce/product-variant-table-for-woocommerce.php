@@ -1,17 +1,17 @@
 <?php
 /*
-Plugin Name: PVT - Product Variation Table For WooCommerce
-Plugin URI: https://wordpress.org/plugins/product-variant-table-for-woocommerce/
+Plugin Name: PVT - Product Variation Table for WooCommerce
+Plugin URI: https://wpxtension.com/product/product-variation-table-for-woocommerce/
 Description: Display WooCommerce product variations in a nicely formatted and customizable table on the single product page. 
 Author: WPXtension
 Author URI: https://wpxtension.com/
 Text Domain: product-variant-table-for-woocommerce
 Domain Path: /languages
-Version: 1.5.4
+Version: 1.6.0
 Requires at least: 4.7.0
 Requires PHP: 5.6.20
 WC requires at least: 3.0.0
-WC tested up to: 9.2
+WC tested up to: 9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -32,10 +32,15 @@ if (!defined('ABSPATH')) {
  * ====================================================
  */
 
-define("PVTFW_VARIANT_TABLE_VERSION", '1.5.4');
-define("PVTFW_REQUIRED_PRO_VERSION", '1.5.0');
+define("PVTFW_VARIANT_TABLE_VERSION", '1.6.0');
+define("PVTFW_REQUIRED_PRO_VERSION", '1.6.0');
 define("PVTFW_DIR", plugin_dir_path(__FILE__) );
 define("PVTFW_FILE", plugin_basename(__FILE__));
+
+if ( ! defined( 'PVTFW_MAYBE_PRO_PLUGIN_FILE' ) ) {
+	$pvtfw_maybe_pro_plugin_file = sprintf('%s/product-variant-table-for-woocommerce-pro/product-variant-table-for-woocommerce-pro.php', wp_normalize_path( WP_PLUGIN_DIR ));
+	define( 'PVTFW_MAYBE_PRO_PLUGIN_FILE', $pvtfw_maybe_pro_plugin_file );
+}
 
 /**
  * ====================================================
@@ -94,7 +99,7 @@ if( !class_exists('PVTFW_TABLE' )):
 		 */
 		function error_notice(){
 			/* translators: %1$s is starting of <a>tag & %2$s is end of <a>tag */
-			echo wp_kses_post( '<div class="error"><p><strong>' . __('Product Variation Table For Woocommerce - PVT', 'product-variant-table') . '</strong> ' . sprintf(__('requires %1$sWooCommerce%2$s to be installed & activated!', 'product-variant-table'), '<a href="http://wordpress.org/extend/plugins/woocommerce/">', '</a>') . '</p></div>' );
+			echo wp_kses_post( '<div class="error"><p><strong>' . __('Product Variation Table For Woocommerce - PVT', 'product-variant-table-for-woocommerce') . '</strong> ' . sprintf(__('requires %1$sWooCommerce%2$s to be installed & activated!', 'product-variant-table-for-woocommerce'), '<a href="http://wordpress.org/extend/plugins/woocommerce/">', '</a>') . '</p></div>' );
 		}
 
 		/**
@@ -466,5 +471,19 @@ function pvtfw_companion_error_msg(){
 		'</b>',
 		esc_html(constant( 'PVTFW_REQUIRED_PRO_VERSION' )) 
 	);
+}
+
+// Meta notice
+add_action( 'after_plugin_row_meta', 'pvtfw_companion_meta_notice', 10, 2 );
+function pvtfw_companion_meta_notice( string $plugin_file, array $plugin_data) {
+	if ( plugin_basename( PVTFW_MAYBE_PRO_PLUGIN_FILE ) === $plugin_file ) {
+		$current_version = $plugin_data['Version'];
+		if (  version_compare( $current_version, constant( 'PVTFW_REQUIRED_PRO_VERSION' ), '<' )  ) {
+			/* translators: %s: Pro Plugin Version */
+			$notice_text = 	 sprintf(esc_html__('You are running an older version of "PVT - Product Variation Table for WooCommerce - Pro". Please upgrade to %s or higher.', 'product-variant-table-for-woocommerce'), esc_html(constant( 'PVTFW_REQUIRED_PRO_VERSION' )));
+
+			printf( '<p style="color: darkred"><span class="dashicons dashicons-warning"></span> <strong>%s</strong></p>', esc_html($notice_text) );
+		}
+	}
 }
 

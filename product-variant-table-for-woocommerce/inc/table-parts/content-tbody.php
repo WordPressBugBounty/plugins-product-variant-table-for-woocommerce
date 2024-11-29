@@ -53,76 +53,6 @@
 
 					$variant_id = $single_variation->get_id();
 
-					$stock_info = esc_html__('Out of Stock', 'product-variant-table-for-woocommerce');
-
-					// Checking Prodcut Stock
-					if(! $single_variation->is_in_stock()){
-						$btn_format = apply_filters( 'pvtfw_row_cart_btn_oos', 
-							wp_kses_post( sprintf('<button class="%s" disabled>
-									<span class="pvtfw-btn-text">%s</span> 
-									<div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
-									</button>', 
-									/**
-									 *
-									 * Hook: pvtfw_add_to_cart_btn_classes
-									 * Hook: pvtfw_stock_btn_text
-									 * 
-									 * @since version 1.4.16 
-									 * 
-									 * @version 1.4.18 { hook renamed to `pvtfw_stock_btn_text` from `pvtfw_cart_btn_text` }
-									 * 
-									 **/
-									apply_filters( 'pvtfw_add_to_cart_btn_classes', 
-										wp_is_block_theme() ? 'wp-block-button__link wp-element-button wc-block-components-product-button__button pvtfw_variant_table_cart_btn' : 'pvtfw_variant_table_cart_btn button alt' 
-									),
-									apply_filters( 'pvtfw_stock_btn_text', $stock_info ) 
-							) ), 
-							$product_id, 
-							$cart_url, 
-							$product_url, 
-							$variant_id, 
-							$stock_info
-						);
-					}
-					else{
-						$btn_format = apply_filters( 'pvtfw_row_cart_btn_is', 
-							wp_kses_post( sprintf('<button data-product-id="%s" data-url="%s" data-product="%s" data-variant="%s" class="%s">
-								<span class="pvtfw-btn-text">%s</span> 
-								<div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
-								</button>', $product_id, $cart_url, $product_url, $variant_id, 
-								/**
-								 *
-								 * Hook: pvtfw_add_to_cart_btn_classes
-								 * Hook: pvtfw_cart_btn_text
-								 * 
-								 * @since version 1.4.16 
-								 * 
-								 **/
-								apply_filters( 'pvtfw_add_to_cart_btn_classes', 
-									wp_is_block_theme() ? 'wp-block-button__link wp-element-button wc-block-components-product-button__button pvtfw_variant_table_cart_btn' : 'pvtfw_variant_table_cart_btn button alt' 
-								),
-								apply_filters( 'pvtfw_cart_btn_text', 
-									
-										/* 
-										 * @note: If it is coming from plugin settings it will not translate. Because, dynamic text
-										 * is not translatable.
-										 * 
-										 * @recommendation: Contact through our support forum
-										 * 
-										 * @link: https://localise.biz/wordpress/plugin/intro#content
-										 */
-										$text
-
-								) 
-							) ), 
-							$product_id, 
-							$cart_url, 
-							$product_url, 
-							$variant_id, 
-							$text
-						);
-					}
-
 					// Variation Thumbnail
 					$thumbnail = "<figure class='item'><img class='pvtfw_variant_table_img_size' src='".wp_get_attachment_url( $single_variation->get_image_id() )."' /></figure>";
 
@@ -184,7 +114,22 @@
 					 * 
 					 **/
 					$options['quantity'][] = apply_filters( 'pvt_woocommerce_quantity_input_args', $options_qty_layout, $qty_layout, $single_variation );
-					$options['action'][] = $btn_format;
+					/**
+					 *
+					 * @note: Passed data as array to work with them later
+					 * 
+					 * 
+					 * @since version 1.6.0 
+					 * 
+					 **/
+					$options['action'][] = array(
+						'product_id' 	=> $product_id, 
+						'cart_url'		=> $cart_url, 
+						'product_url'	=> $product_url, 
+						'variant_id'	=> $variant_id, 
+						'stock_status'	=> $single_variation->is_in_stock(),
+						'text'			=> $text
+					);
 				endif;
 			}
 			// Removing values if value is off in column array
@@ -382,31 +327,60 @@
 								/**
 								 * Check compatibility.php file to edit +/- button code. 
 								 * 
-								 * Function name: `pvt_display_qty_plus_minus_button`
+								 * Function name: `pvt_display_qty_field`
 								 * 
-								 * New Function name: `pvt_print_qty_field`
+								 * New Hook name: `pvt_print_qty_field`
 								 *	
 								 * @since 1.4.14
 								 * 
 								 * @modified in 1.5.0
 								 * 
+								 * @modified in 1.6.0
 								 * 
 								 */ 
 
 								// print_r($value);
 
-								echo apply_filters( 'pvt_print_qty_field', $value ); //@note: escaped the $value(array) values inside the `pvt_print_qty_field` filter
+								apply_filters( 'pvt_print_qty_field', $value );
 
 								// woocommerce_quantity_input($value);
 							}
 							else{
-								echo $value; //@note: escaped at the time of creation of $options array. If escaped here, many compatibility issues will arise for other plugins
+								// To display `out of stock message` if `Remove Quantity Field` option enabled
+								echo wp_kses_post( $value );
+							}
+						echo "</td>";
+					}
+					elseif( strtolower( $key2 ) == __("action", "product-variant-table-for-woocommerce") ){
+						echo wp_kses_post( "<td data-title='{$key2}'>" );
+							/**
+							 *
+							 * @note: Check the $value is an array or string
+							 * 
+							 * @since version 1.4.13 
+							 * 
+							 **/
+							if( is_array( $value ) ){
+								/**
+								 * Check compatibility.php file. 
+								 * 
+								 * Hooked Function: `pvt_display_cart_button`
+								 * 
+								 * Hook name: `pvt_print_cart_btn`
+								 *	
+								 * @since 1.6.0
+								 * 
+								 * 
+								 */ 
+
+								apply_filters( 'pvt_print_cart_btn', $value );
+
+								// woocommerce_quantity_input($value);
 							}
 						echo "</td>";
 					}
 					else{
-						echo "<td data-title='{$key2}'>{$value}</td>";
-						//@note: escaped at the time of creation of $options array. If escaped here, many compatibility issues will arise for other plugins
+						echo wp_kses_post( "<td data-title='{$key2}'>{$value}</td>" );
 					}
 				}
 

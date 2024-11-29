@@ -44,7 +44,7 @@ if( !class_exists('PVTFW_AVAILABE_BTN' )):
             // Don't do anything if variable product has an issue with setup like- price is missing
             // Just display a message as WooCommerce does.
             if ( empty( $available_variations ) && false !== $available_variations ){ ?>
-                <p class="stock out-of-stock"><?php echo esc_html( apply_filters( 'woocommerce_out_of_stock_message', __( 'This product is currently out of stock and unavailable.', 'woocommerce' ) ) ); ?></p>
+                <p class="stock out-of-stock"><?php echo esc_html( apply_filters( 'woocommerce_out_of_stock_message', __( 'This product is currently out of stock and unavailable.', 'product-variant-table-for-woocommerce' ) ) ); ?></p>
                 <?php
                 return;
             }

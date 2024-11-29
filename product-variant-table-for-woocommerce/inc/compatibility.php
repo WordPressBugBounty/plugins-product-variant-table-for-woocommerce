@@ -121,6 +121,7 @@ if ( !function_exists( 'pvt_get_price_html' ) ){
  * @since 1.4.14
  * Updated it in version 1.4.15
  * Updated it in version 1.5.0
+ * Updated it in version 1.6.0 [Removed ob_start & ob_get_clean]
  * =============================================================================
  */
 
@@ -129,8 +130,6 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
     function pvt_display_qty_field( $args ){
 
         if( is_array( $args ) && $args['layout'] === 'plus/minus' ){
-
-            ob_start();
 
             echo '<div class="pvt-qty-input">';
                 echo '<button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>';
@@ -146,11 +145,18 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
                 echo '<button class="qty-count qty-count--add" data-action="add" type="button">+</button>';
             echo '</div>';
 
-            return ob_get_clean();
+            /**
+             * =============================================================================
+             * Hook to add anything after the quantity field markup
+             * @since 1.6.0
+             * =============================================================================
+             */
+
+            do_action( 'pvt_after_quantity_field_markup', $args );
 
         }
         if( is_array( $args ) && $args['layout'] === 'basic' ){
-            ob_start();
+
             echo '<div class="pvtfw-quantity">';
                 /**
                  * =============================================================================
@@ -161,7 +167,15 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
                 do_action('pvtfw_basic_qty_input', $args);
             echo '</div>';
 
-            return ob_get_clean();
+            /**
+             * =============================================================================
+             * Hook to add anything after the quantity field markup
+             * @since 1.6.0
+             * =============================================================================
+             */
+
+            do_action( 'pvt_after_quantity_field_markup', $args );
+
         }
 
     }
@@ -186,7 +200,7 @@ if( !function_exists( 'pvt_plus_minus_qty_input_markup' ) ){
         // print_r($args);
 
         /* translators: %s is replaced with the product name or quantity text */
-        $label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'woocommerce' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'woocommerce' );
+        $label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'product-variant-table-for-woocommerce' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'product-variant-table-for-woocommerce' );
 
         /**
          * The input type attribute will generally be 'number'. An exception is made for non-hidden readonly inputs: in this case we set the
@@ -220,7 +234,7 @@ if( !function_exists( 'pvt_plus_minus_qty_input_markup' ) ){
            esc_attr( $args['input_name'] ),
            esc_attr( $args['input_value'] ),
            esc_attr( $label ),
-           esc_html__( 'Product quantity', 'woocommerce' ),
+           esc_html__( 'Product quantity', 'product-variant-table-for-woocommerce' ),
            esc_attr( $args['min_value'] ),
            esc_attr( 0 < $args['max_value'] ? $args['max_value'] : '' ),
            ( ! $args['readonly'] ) ? sprintf('
@@ -254,7 +268,7 @@ if( !function_exists( 'pvt_basic_qty_input_markup' ) ){
     function pvt_basic_qty_input_markup( $args ){
 
         /* translators: %s is replaced with the product name or quantity text */
-        $label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'woocommerce' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'woocommerce' );
+        $label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'product-variant-table-for-woocommerce' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'product-variant-table-for-woocommerce' );
 
         /**
          * The input type attribute will generally be 'number'. An exception is made for non-hidden readonly inputs: in this case we set the
@@ -285,7 +299,7 @@ if( !function_exists( 'pvt_basic_qty_input_markup' ) ){
            esc_attr( $args['input_name'] ),
            esc_attr( $args['input_value'] ),
            esc_attr( $label ),
-           esc_html__( 'Product quantity', 'woocommerce' ),
+           esc_html__( 'Product quantity', 'product-variant-table-for-woocommerce' ),
            esc_attr( $args['min_value'] ),
            esc_attr( 0 < $args['max_value'] ? $args['max_value'] : '' ),
            ( ! $args['readonly'] ) ? sprintf('
@@ -330,4 +344,144 @@ if( !function_exists( 'pvt_push_in_stock_text' ) ){
     add_filter( 'woocommerce_get_availability_text', 'pvt_push_in_stock_text', 99, 2 );
 
 }
+
+
+/**
+ * =============================================================================
+ * PVT Display Cart Button
+ * @since 1.6.0
+ * =============================================================================
+ */
+
+if( !function_exists( 'pvt_display_cart_button' ) ){
+
+    function pvt_display_cart_button( $args ){
+
+        $stock_info = esc_html__('Out of Stock', 'product-variant-table-for-woocommerce');
+
+        $cart_button = pvt_cart_button_condition( $args, $stock_info ); //callback function
+
+        if( $args['stock_status'] ){
+            apply_filters( 'pvtfw_row_cart_btn_is', 
+                $cart_button, 
+                $args['product_id'], 
+                $args['cart_url'], 
+                $args['product_url'], 
+                $args['variant_id'], 
+                $args['text']
+            );
+        }
+        else{
+            apply_filters( 'pvtfw_row_cart_btn_oos', 
+                $cart_button, 
+                $args['product_id'], 
+                $args['cart_url'], 
+                $args['product_url'], 
+                $args['variant_id'], 
+                $stock_info
+            );
+        }
+        
+
+    }
+
+    add_filter( 'pvt_print_cart_btn', 'pvt_display_cart_button', 99, 1 );
+
+}
+
+/**
+ * =============================================================================
+ * Callback function for `pvt_display_cart_button`
+ * @since 1.6.0
+ * =============================================================================
+ */
+if( !function_exists( 'pvt_cart_button_condition' ) ){
+
+    function pvt_cart_button_condition( $args, $stock_info ){
+
+            if( $args['stock_status'] ){
+                /**
+                 *
+                 * Hook: pvtfw_disable_add_to_cart_button
+                 * Disable the add-to-cart button inside table data
+                 * 
+                 * @since version 1.6.0 
+                 * 
+                 **/
+                if( apply_filters( 'pvtfw_disable_add_to_cart_button', false ) ){
+                    return;
+                }
+
+                echo wp_kses_post( 
+                    sprintf('<button data-product-id="%s" data-url="%s" data-product="%s" data-variant="%s" class="%s">
+                        <span class="pvtfw-btn-text">%s</span> 
+                        <div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
+                        </button>', $args['product_id'], $args['cart_url'], $args['product_url'], $args['variant_id'], 
+                        /**
+                         *
+                         * Hook: pvtfw_add_to_cart_btn_classes
+                         * Hook: pvtfw_cart_btn_text
+                         * 
+                         * @since version 1.4.16 
+                         * 
+                         **/
+                        apply_filters( 'pvtfw_add_to_cart_btn_classes', 
+                            wp_is_block_theme() ? 'wp-block-button__link wp-element-button wc-block-components-product-button__button pvtfw_variant_table_cart_btn' : 'pvtfw_variant_table_cart_btn button alt' 
+                        ),
+                        apply_filters( 'pvtfw_cart_btn_text', 
+                            
+                            /* 
+                             * @note: If it is coming from plugin settings it will not translate. Because, dynamic text
+                             * is not translatable.
+                             * 
+                             * @recommendation: Contact through our support forum
+                             * 
+                             * @link: https://localise.biz/wordpress/plugin/intro#content
+                             */
+                            $args['text']
+
+                        ) 
+                    ) 
+                );
+            }
+            else{
+                /**
+                 *
+                 * Hook: pvtfw_disable_out_of_stock_button
+                 * Disable the out-of-stock button inside table data
+                 * 
+                 * @since version 1.6.0 
+                 * 
+                 **/
+                if( apply_filters( 'pvtfw_disable_out_of_stock_button', false ) ){
+                    return;
+                }
+                echo wp_kses_post( 
+                    sprintf('<button class="%s" disabled>
+                            <span class="pvtfw-btn-text">%s</span> 
+                            <div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
+                            </button>', 
+                            /**
+                             *
+                             * Hook: pvtfw_add_to_cart_btn_classes
+                             * Hook: pvtfw_stock_btn_text
+                             * 
+                             * @since version 1.4.16 
+                             * 
+                             * @version 1.4.18 { hook renamed to `pvtfw_stock_btn_text` from `pvtfw_cart_btn_text` }
+                             * 
+                             **/
+                            apply_filters( 'pvtfw_add_to_cart_btn_classes', 
+                                wp_is_block_theme() ? 'wp-block-button__link wp-element-button wc-block-components-product-button__button pvtfw_variant_table_cart_btn' : 'pvtfw_variant_table_cart_btn button alt' 
+                            ),
+                            apply_filters( 'pvtfw_stock_btn_text', $stock_info ) 
+                    ) 
+                );
+            }
+
+
+    }
+}
+
+
 

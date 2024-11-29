@@ -36,7 +36,7 @@ if( !class_exists('PVTFW_ADVANCE' )):
                 <h3><?php echo esc_html('Exclude/Include Settings', 'product-variant-table-for-woocommerce') ?></h3>
                 <div class="detail"><?php echo esc_html('Show/Hide variation table for a specific group of categories/devices', 'product-variant-table-for-woocommerce-pro'); ?></div>
                 <a href="https://wpxtension.com/product/product-variation-table-for-woocommerce/" target="_blank">
-                    <img src="https://ps.w.org/product-variant-table-for-woocommerce/assets/exclude_include.png" alt="Exclude/Imclude Settings">
+                    <img src="<?php echo esc_url( $this->org_assets_url( '/exclude_include.png' ) ); ?>" alt="Exclude/Imclude Settings">
                 </a>
 
                 <?php do_action('pvtfw_advance_section_after'); ?>
@@ -58,7 +58,7 @@ if( !class_exists('PVTFW_ADVANCE' )):
             <h3><?php echo esc_html('Bulk Cart, Pagination, & Search Settings', 'product-variant-table-for-woocommerce-pro'); ?></h3>
             <div class="detail"><?php echo esc_html('Add bulk cart for table and search facility', 'product-variant-table-for-woocommerce-pro'); ?></div>
             <a href="https://wpxtension.com/product/product-variation-table-for-woocommerce/" target="_blank">
-                <img src="https://ps.w.org/product-variant-table-for-woocommerce/assets/bulk_cart.png" alt="Bulk Cart Settings">
+                <img src="<?php echo esc_url( $this->org_assets_url( '/bulk_cart.png' ) ); ?>" alt="Bulk Cart Settings">
             </a>
         <?php
         }
@@ -73,7 +73,7 @@ if( !class_exists('PVTFW_ADVANCE' )):
             <h3><?php echo esc_html('Thumbnail Settings', 'product-variant-table-for-woocommerce-pro-pro'); ?></h3>
             <div class="detail"><?php echo esc_html('Set your thumbnail width, height and popup', 'product-variant-table-for-woocommerce-pro'); ?></div>
             <a href="https://wpxtension.com/product/product-variation-table-for-woocommerce/" target="_blank">
-                <img src="https://ps.w.org/product-variant-table-for-woocommerce/assets/thumbnail.png" alt="Thumbnail Settings">
+                <img src="<?php echo esc_url( $this->org_assets_url( '/thumbnail.png' ) ); ?>" alt="Thumbnail Settings">
             </a>
         <?php
         }
@@ -111,6 +111,19 @@ if( !class_exists('PVTFW_ADVANCE' )):
 
             // Adding Advance Tab
             add_filter('pvtfw_admin_setting_tab', array( $this, 'new_setting_tab' ), 10, 2);
+        }
+
+
+        /**
+         * { Org assets }
+         *
+         * @param      <type>  $src    The source
+         *
+         * @return     <type>  ( description_of_the_return_value )
+         */
+        public function org_assets_url( $src ){
+            $clean_file = ltrim( $src, '/');
+            return sprintf('https://ps.w.org/product-variant-table-for-woocommerce/assets/%s', $clean_file);
         }
 
     }
