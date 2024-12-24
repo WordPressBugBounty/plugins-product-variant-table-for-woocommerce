@@ -54,7 +54,7 @@
 					$variant_id = $single_variation->get_id();
 
 					// Variation Thumbnail
-					$thumbnail = "<figure class='item'><img class='pvtfw_variant_table_img_size' src='".wp_get_attachment_url( $single_variation->get_image_id() )."' /></figure>";
+					$thumbnail = "<figure class='item'>".wp_get_attachment_image( $single_variation->get_image_id(), array('100','100'), false, array( 'class' => 'pvtfw_variant_table_img_size' ) )."</figure>";
 
 					$options['image_link'][] = apply_filters('pvtfw_table_thumbnail', wp_kses_post( $thumbnail ), $single_variation);
 					$options['sku'][] = apply_filters('pvtfw_table_sku', esc_attr( $single_variation->get_sku() ), $single_variation);
@@ -119,7 +119,7 @@
 					 * @note: Passed data as array to work with them later
 					 * 
 					 * 
-					 * @since version 1.6.0 
+					 * @since version 1.6.0
 					 * 
 					 **/
 					$options['action'][] = array(
@@ -192,6 +192,14 @@
 
 								break;
 
+							case 'attributes':
+
+								$key1_title = __('Attributes', 'product-variant-table-for-woocommerce');
+
+								$key1 = apply_filters( 'pvtfw_attributes_title', $key1_title );
+
+								break;
+
 							case 'dimensions_html':
 
 								$key1_title = __('Dimensions', 'product-variant-table-for-woocommerce');
@@ -218,7 +226,7 @@
 
 							case 'quantity':
 
-								$key1_title = __('quantity', 'product-variant-table-for-woocommerce');
+								$key1_title = __('Quantity', 'product-variant-table-for-woocommerce');
 
 								$key1 = apply_filters( 'pvtfw_quantity_title', $key1_title );
 
@@ -286,7 +294,7 @@
 
 				foreach ($values as $key2 => $value) {
 
-					if($key2 == "attributes"){
+					if( $key2 == __('Attributes', 'product-variant-table-for-woocommerce' ) ){
 
 						foreach($value as $key3 => $val){
 
@@ -314,7 +322,7 @@
 							
 						}
 					}
-					elseif($key2 == __("quantity", "product-variant-table-for-woocommerce") ){
+					elseif( $key2 == __('Quantity', 'product-variant-table-for-woocommerce') ){
 						echo wp_kses_post( "<td data-title='{$key2}'>" );
 							/**
 							 *
@@ -351,7 +359,7 @@
 							}
 						echo "</td>";
 					}
-					elseif( strtolower( $key2 ) == __("action", "product-variant-table-for-woocommerce") ){
+					elseif( $key2 == __('Action', 'product-variant-table-for-woocommerce') ){
 						echo wp_kses_post( "<td data-title='{$key2}'>" );
 							/**
 							 *

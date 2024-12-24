@@ -141,6 +141,7 @@ if( !class_exists('PVTFW_CART' ) ):
             // phpcs:disable WordPress.Security.NonceVerification.Missing
             // Followed the WooCommerce woocommerce>includes>class-wc-ajax.php line 457
             // Nonce is causing issue with Caching Plugin
+            
             if ( ! isset( $_POST['product_id'] ) ) {
                 return;
             }
@@ -186,7 +187,7 @@ if( !class_exists('PVTFW_CART' ) ):
                 WC_AJAX::get_refreshed_fragments(); 
         
             }
-            
+        
             wp_die();
         
         }

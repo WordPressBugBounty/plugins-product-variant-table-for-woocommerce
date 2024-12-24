@@ -4,7 +4,7 @@ Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
 Tested up to: 6.7
 Requires PHP: 5.6.20
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -176,15 +176,19 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.6.1 [11-12-2024] Wednesday =
-* Update: Ajax cart code as per WooCommerce Ajax Cart.
+= 1.6.2 [24-12-2024] Tuesday =
+* Fix: Minor conditional fix.
+* Enhancement: UI of Advanced tab.
+* Update: Codebase based on Plugin Check Plugin(PCP).
+* Compatibility: WooCommerce 9.5.
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)
 
 
 == Upgrade Notice ==
 
-= 1.6.0 =
-* Fix: Cart Notice fragments, according to the latest WooCommerce Ajax cart setup.
-* Dev: `pvtfw_row_cart_btn_is` & `pvtfw_row_cart_btn_oos` now located at compatibility.php. Any snippet you are using with the mentioned filter hooks should use `echo` rather than `return`.
+= 1.6.2 =
+* Fix: Minor conditional fix.
+* Enhancement: UI of Advanced tab.
+* Update: Codebase based on Plugin Check Plugin(PCP).
 

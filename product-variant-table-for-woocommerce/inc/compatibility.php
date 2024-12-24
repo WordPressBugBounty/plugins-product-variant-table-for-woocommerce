@@ -121,7 +121,7 @@ if ( !function_exists( 'pvt_get_price_html' ) ){
  * @since 1.4.14
  * Updated it in version 1.4.15
  * Updated it in version 1.5.0
- * Updated it in version 1.6.0 [Removed ob_start & ob_get_clean]
+ * Updated it in version 1.5.5 [Removed ob_start & ob_get_clean]
  * =============================================================================
  */
 
@@ -148,7 +148,7 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
             /**
              * =============================================================================
              * Hook to add anything after the quantity field markup
-             * @since 1.6.0
+             * @since 1.5.5
              * =============================================================================
              */
 
@@ -170,7 +170,7 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
             /**
              * =============================================================================
              * Hook to add anything after the quantity field markup
-             * @since 1.6.0
+             * @since 1.5.5
              * =============================================================================
              */
 
@@ -349,7 +349,7 @@ if( !function_exists( 'pvt_push_in_stock_text' ) ){
 /**
  * =============================================================================
  * PVT Display Cart Button
- * @since 1.6.0
+ * @since 1.5.5
  * =============================================================================
  */
 
@@ -392,7 +392,7 @@ if( !function_exists( 'pvt_display_cart_button' ) ){
 /**
  * =============================================================================
  * Callback function for `pvt_display_cart_button`
- * @since 1.6.0
+ * @since 1.5.5
  * =============================================================================
  */
 if( !function_exists( 'pvt_cart_button_condition' ) ){
@@ -400,18 +400,6 @@ if( !function_exists( 'pvt_cart_button_condition' ) ){
     function pvt_cart_button_condition( $args, $stock_info ){
 
             if( $args['stock_status'] ){
-                /**
-                 *
-                 * Hook: pvtfw_disable_add_to_cart_button
-                 * Disable the add-to-cart button inside table data
-                 * 
-                 * @since version 1.6.0 
-                 * 
-                 **/
-                if( apply_filters( 'pvtfw_disable_add_to_cart_button', false ) ){
-                    return;
-                }
-
                 echo wp_kses_post( 
                     sprintf('<button data-product-id="%s" data-url="%s" data-product="%s" data-variant="%s" class="%s">
                         <span class="pvtfw-btn-text">%s</span> 
@@ -445,17 +433,6 @@ if( !function_exists( 'pvt_cart_button_condition' ) ){
                 );
             }
             else{
-                /**
-                 *
-                 * Hook: pvtfw_disable_out_of_stock_button
-                 * Disable the out-of-stock button inside table data
-                 * 
-                 * @since version 1.6.0 
-                 * 
-                 **/
-                if( apply_filters( 'pvtfw_disable_out_of_stock_button', false ) ){
-                    return;
-                }
                 echo wp_kses_post( 
                     sprintf('<button class="%s" disabled>
                             <span class="pvtfw-btn-text">%s</span> 
