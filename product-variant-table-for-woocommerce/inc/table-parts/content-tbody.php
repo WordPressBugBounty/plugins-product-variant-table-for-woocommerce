@@ -127,7 +127,7 @@
 						'cart_url'		=> $cart_url, 
 						'product_url'	=> $product_url, 
 						'variant_id'	=> $variant_id, 
-						'stock_status'	=> $single_variation->is_in_stock(),
+						'stock_status'	=> $single_variation->get_stock_status(),
 						'text'			=> $text
 					);
 				endif;
