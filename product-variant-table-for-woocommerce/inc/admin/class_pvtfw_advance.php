@@ -42,12 +42,13 @@ if( !class_exists('PVTFW_ADVANCE' )):
                 <a href="https://wpxtension.com/product/product-variation-table-for-woocommerce/" target="_blank" style="text-decoration: none; color: #2c3338; opacity: 0.5">
                     <table class="form-table" style="pointer-events: none;">
                         <tr>
-                            <th scope="row">Display Rule</th>
+                            <th scope="row">Display Rule <?php PVTFW_COMMON::badge(); ?></th>
                             <td>
                                 <select class="regular-ele-width" name='pvtfw_variant_table_display_rule'>
                                     <option value="default">Default</option>
                                     <option value="disable_pvt">Disable variation table</option>
                                     <option value="keep_both">Keep variation table with dropdown</option>
+                                    <option value="table_popup">Table Popup</option>
                                 </select>
                             </td>
                         </tr>
@@ -70,7 +71,7 @@ if( !class_exists('PVTFW_ADVANCE' )):
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">Shortcode Rule</th>
+                            <th scope="row">Shortcode Rule <?php PVTFW_COMMON::badge(); ?></th>
                             <td>
                                 <label><input type='checkbox' name='pvtfw_variant_table_rule_for_shortcode' />
                                 Apply the above Filter By options for Shortcode too.</label>
@@ -87,6 +88,22 @@ if( !class_exists('PVTFW_ADVANCE' )):
                             <th scope="row">Hide Out of Stock Variation</th>
                             <td>
                                 <label><input type='checkbox' name='pvtfw_variant_table_hide_out_of_stock_variation' /> Disable out of stock variation from the table</label>
+                            </td>
+                        </tr>
+                        <tr valign="top" data-child="table_popup-child">
+                            <th scope="row">Popup Container Width <?php PVTFW_COMMON::badge(); ?></th>
+                            <td>
+                                <input class="small-ele-width" type="number" name="pvtfw_variant_table_table_popup_width"
+                                    value="1200"><span>px</span>
+                                <p><?php echo esc_html__('The width of Table Popup container. It will be applicable when you select the display rule as "Table Popup" from here or from the product edit page.', 'product-variant-table-for-woocommerce'); ?></p>
+                            </td>
+                        </tr>
+                        <tr valign="top" data-child="table_popup-child">
+                            <th scope="row">Popup Container Height <?php PVTFW_COMMON::badge(); ?></th>
+                            <td>
+                                <input class="small-ele-width" type="number" name="pvtfw_variant_table_table_popup_height"
+                                    value="600"><span>px</span>
+                                    <p><?php echo esc_html__('The height of Table Popup container. It will be applicable when you select the display rule as "Table Popup" from here or from the product edit page.', 'product-variant-table-for-woocommerce'); ?></p>
                             </td>
                         </tr>
                     </table>

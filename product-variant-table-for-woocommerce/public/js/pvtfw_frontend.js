@@ -1,14 +1,18 @@
 
-(function ($) {
+;(function ($) {
 
-  $(document).ready(function(){
+  // Whole code inside an arrow function
+  var pvtfw_standard = () => {
+    $('.available-options-btn button[data-scrollto^="#"]').on('click', function(event) {
 
-    $('.available-options-btn button[scrollto^="#"]').on('click', function(event) {
+        event.preventDefault();
 
-        var target = $( $(this).attr('scrollto') );
+        var target = $( $(this).data('scrollto') );
 
-        if( target.length ) {
-            event.preventDefault();
+        // Trigger to work on it later
+        $(document).trigger('pvtfw_before_scrollto_table', [ $(this) ]);
+
+        if( target.length && !$(this).data('product_id') ) {
             $('html, body').animate({
                 scrollTop: target.offset().top-20
             }, 500);
@@ -37,8 +41,40 @@
         });
 
         rows.sort(function (a, b) {
-          var aValue = $(a).find('td').eq(index).text(),
-              bValue = $(b).find('td').eq(index).text();
+          /* @note: First check, sale price exists or not
+           * If exists, get the sale price by finding <ins> tag
+           * 
+           * @added: 1.6.4
+           */
+          var aValue = $(a).find('td').eq(index).find('ins').text() === '' ? 
+                       $(a).find('td').eq(index).text() :
+                       $(a).find('td').eq(index).find('ins').text(),
+
+              bValue = $(b).find('td').eq(index).find('ins').text() === '' ?
+                       $(b).find('td').eq(index).text() :
+                       $(b).find('td').eq(index).find('ins').text();
+
+          // Removing white spaces
+          aValue = aValue.trim();
+          bValue = bValue.trim();
+
+          // Find an index for new line in aValue
+          var newlineIndex = aValue.indexOf('\n');
+
+          // If new line is not available in aValue, it will return -1
+          if (-1 !== newlineIndex) {
+            // If new line found, start at index 0 and end with the newLineIndex value to prepare the string
+            aValue = aValue.substring(0, newlineIndex);
+          }
+
+          // Find an index for new line in bValue
+          newlineIndex = bValue.indexOf('\n');
+
+          // If new line is not available in bValue, it will return -1
+          if (-1 !== newlineIndex) {
+            // If new line found, start at index 0 and end with the newLineIndex value to prepare the string
+            bValue = bValue.substring(0, newlineIndex);
+          }
 
           // Checking Currency, if found then remove the currency symbol
           if( aValue.includes(pre_info.woo_curr) || bValue.includes(pre_info.woo_curr) ){
@@ -52,8 +88,8 @@
           }
           // Checking Thousand Separator, if found then remove the thousand separator
           if( aValue.includes(pre_info.thousand_sep) || bValue.includes(pre_info.thousand_sep) ){
-            aValue = aValue.replace(pre_info.thousand_sep,'');
-            bValue = bValue.replace(pre_info.thousand_sep,'');
+            aValue = aValue.replaceAll(pre_info.thousand_sep,'');
+            bValue = bValue.replaceAll(pre_info.thousand_sep,'');
           }
           // console.log(thColHead);
           return pvtIsNumeric(aValue) && pvtIsNumeric(bValue) ? 
@@ -182,7 +218,13 @@
         $this.closest(".pvt-qty-input").find("input.input-text.qty.text").trigger("change");
       });
     })();
-
+  }
+  // Trigger the following on firing event `pvtfw_standard_init`
+  $(document).on('pvtfw_standard_init', ()=>{
+    pvtfw_standard();
   });
+  // Kick start the function on loading the page
+  pvtfw_standard();
+
 
 })(jQuery);

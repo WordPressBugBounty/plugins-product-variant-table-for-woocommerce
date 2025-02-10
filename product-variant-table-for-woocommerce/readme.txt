@@ -4,7 +4,7 @@ Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
 Tested up to: 6.7
 Requires PHP: 5.6.20
-Stable tag: 1.6.3
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -176,11 +176,13 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.6.3 [07-01-2024] Tuesday =
-* Add: Backorder variation listed in the variation table.
-* Update: $option['action'][] array edited and replaced `is_in_stock()` with `get_stock_status()`.
-* Update: Conditional changes for In Stock and Out of Stock button markup.
-* Dev: `pvtfw_cart_btn_after_backorder_text` filter hook added. To rewrite the backorder text with the add-to-cart button. To disable it: `add_filter('pvtfw_cart_btn_after_backorder_text', '__return_false');`
+= 1.6.4 [10-02-2025] Monday =
+* Dev: Added `pvtfw_available_btn_product_id` for available options id.
+* Dev: Added `pvtfw_variation_table_heading_after` for table heading.
+* Update: Table sorting script.
+* Update: Settings page.
+* Update: Scripts and added necessary trigger.
+* Compatibility: WooCommerce 9.6.
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)
 

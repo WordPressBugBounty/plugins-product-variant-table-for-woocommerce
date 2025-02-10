@@ -70,7 +70,7 @@ if( !class_exists('PVTFW_AVAILABE_BTN' )):
                 );
 
             ?>
-            <button scrollto="#variant-table" type="button"
+            <button data-scrollto="#variant-table" data-product_id="<?php echo esc_attr( apply_filters( 'pvtfw_available_btn_product_id', '', $product ) ); ?>" type="button"
                 class="available-options-btn single_add_to_cart_button button alt"><?php echo esc_html( $available_text ); ?></button>
         </div>
         <?php

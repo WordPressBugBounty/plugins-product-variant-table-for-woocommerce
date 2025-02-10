@@ -154,3 +154,21 @@
   .wpxtension_page_pvtfw_variant_table #wpfooter{
     position: absolute;
   }
+
+
+/* Sticky Tabs */
+.pvtfw-variant-table-setting-wrap .nav-tab-wrapper {
+    position: sticky;
+    top: 35px;
+    background-color: #f0f0f1;
+    z-index: 9;
+}
+
+/* Sticky Save Button and Reset  */
+p.pvtfw-setting-btn {
+    background: #ffffff;
+    padding: 12px;
+    position: sticky;
+    bottom: 0;
+    border-top: 1px solid #eee;
+}

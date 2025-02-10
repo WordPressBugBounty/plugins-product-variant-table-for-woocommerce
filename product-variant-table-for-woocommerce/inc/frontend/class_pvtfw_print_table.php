@@ -28,7 +28,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
         public function print_table(){
 
             // Default is `false` to apply table markup and feature
-            if( apply_filters( 'disable_pvt_to_apply', false ) ){
+            if( apply_filters( 'disable_pvt_to_apply', false ) || apply_filters( 'disable_pvt_table_markup_to_apply', false ) ){
                 return;
             }
             // Print the prepared variation table
@@ -65,9 +65,15 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
                 );
 
                 ?>
-                <h2 id="variant-table">
-                    <?php echo esc_html( apply_filters('pvtfw_variant_table_varaints_heading', __('Available Options', 'product-variant-table-for-woocommerce')) ); ?>
-                </h2>
+                <div class="pvtfw-table-heading-continer">
+                    <h2 id="variant-table">
+                        <?php echo esc_html( apply_filters('pvtfw_variant_table_varaints_heading', __('Available Options', 'product-variant-table-for-woocommerce')) ); ?>
+                    </h2>
+                    <?php 
+                        // Hook to display anything after the table heading
+                        do_action('pvtfw_variation_table_heading_after'); 
+                    ?>
+                </div>
 
                 <?php
 
@@ -197,9 +203,15 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
 
                     ?>
 
-                    <h2 id="variant-table">
-                        <?php echo esc_html( apply_filters('pvtfw_variant_table_varaints_heading', __('Available Options', 'product-variant-table-for-woocommerce')) ); ?>
-                    </h2>
+                    <div class="pvtfw-table-heading-continer">
+                        <h2 id="variant-table">
+                            <?php echo esc_html( apply_filters('pvtfw_variant_table_varaints_heading', __('Available Options', 'product-variant-table-for-woocommerce')) ); ?>
+                        </h2>
+                        <?php 
+                            // Hook to display anything after the table heading
+                            do_action('pvtfw_variation_table_heading_after'); 
+                        ?>
+                    </div>
 
                     <?php
 

@@ -1,6 +1,7 @@
-(function ($) {
+;(function ($) {
 
-    $(document).ready(function () {
+    // Whole code inside an arrow function
+    var pvtfw_standard_subtotal = () => {
 
         // console.log(subtotal_object);
 
@@ -44,7 +45,13 @@
             }
 
         });
-
+    };
+    // Trigger the following on firing event `pvtfw_standard_subtotal_init`
+    $(document).on('pvtfw_standard_subtotal_init', ()=>{
+        pvtfw_standard_subtotal();
     });
+    // Kick start the function on loading the page
+    pvtfw_standard_subtotal();
 
-}(jQuery));
+
+})(jQuery);

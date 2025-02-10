@@ -110,7 +110,7 @@ if( !class_exists('PVTFW_SETTINGS' )):
                                     // break;
                                         //endswitch; 
                                     ?>
-                                   <p class="submit submitbox psfw-setting-btn">
+                                   <p class="submit submitbox pvtfw-setting-btn">
                                         <?php submit_button( __( 'Save Settings', 'product-variant-table-for-woocommerce' ), 'primary', 'pvtfw-save-settings', false);  ?>
                                         <a onclick="return confirm('<?php esc_html_e( 'Are you sure to reset?', 'product-variant-table-for-woocommerce' ) ?>')" class="submitdelete" href="<?php echo esc_url( PVTFW_FORM::reset_link('pvtfw_reset_all') ) ?>"><?php esc_attr_e( 'Reset All', 'product-variant-table-for-woocommerce' ); ?></a>
                                     </p>

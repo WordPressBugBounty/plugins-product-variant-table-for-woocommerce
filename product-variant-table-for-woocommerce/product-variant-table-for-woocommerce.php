@@ -7,11 +7,11 @@ Author: WPXtension
 Author URI: https://wpxtension.com/
 Text Domain: product-variant-table-for-woocommerce
 Domain Path: /languages
-Version: 1.6.3
+Version: 1.6.4
 Requires at least: 4.7.0
 Requires PHP: 5.6.20
 WC requires at least: 3.0.0
-WC tested up to: 9.5
+WC tested up to: 9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -32,7 +32,7 @@ if (!defined('ABSPATH')) {
  * ====================================================
  */
 
-define("PVTFW_VARIANT_TABLE_VERSION", '1.6.3');
+define("PVTFW_VARIANT_TABLE_VERSION", '1.6.4');
 define("PVTFW_REQUIRED_PRO_VERSION", '1.6.0');
 define("PVTFW_DIR", plugin_dir_path(__FILE__) );
 define("PVTFW_FILE", plugin_basename(__FILE__));
@@ -294,7 +294,7 @@ if( !class_exists('PVTFW_TABLE' )):
 			$screen = get_current_screen(); 
 			if ($screen->id === 'wpxtension_page_pvtfw_variant_table') {
 
-				$curTab = PVTFW_COMMON::pvtfw_get_options()->curTab;
+				$curTab           = PVTFW_COMMON::pvtfw_get_options()->curTab;
 				$scrollableTableX = PVTFW_COMMON::pvtfw_get_options()->scrollableTableX;
 
 				wp_enqueue_script('jquery-ui-sortable');
@@ -316,12 +316,12 @@ if( !class_exists('PVTFW_TABLE' )):
 		**/
 		public function frontend_scripts() {
 
-			$fullTable = PVTFW_COMMON::pvtfw_get_options()->fullTable;
-			$showSubTotal = PVTFW_COMMON::pvtfw_get_options()->showSubTotal;
+			$fullTable     = PVTFW_COMMON::pvtfw_get_options()->fullTable;
+			$showSubTotal  = PVTFW_COMMON::pvtfw_get_options()->showSubTotal;
 			$pre_installed = PVTFW_TABLE::is_pvtfw_pro_Active();
 
 			if( $pre_installed && 
-				PVTFW_PRO_COMMON::pvtfw_pro_get_options()->showSearch !== "on" &&
+				PVTFW_PRO_COMMON::pvtfw_pro_get_options()->showSearch     !== "on" &&
 				PVTFW_PRO_COMMON::pvtfw_pro_get_options()->showPagination !== "on"
 				// Checking companion active but search and pagination is not on
 			){
@@ -333,17 +333,17 @@ if( !class_exists('PVTFW_TABLE' )):
 				wp_enqueue_style('pvtfw-frontend-style', plugins_url('public/css/pvtfw_frontend.css', __FILE__), array(), PVTFW_VARIANT_TABLE_VERSION);
 				wp_enqueue_style('fontello-style', plugins_url('public/font/fontello.css', __FILE__), array(), PVTFW_VARIANT_TABLE_VERSION);
 
-				$get_woo_curr = get_woocommerce_currency_symbol();
+				$get_woo_curr         = get_woocommerce_currency_symbol();
 				$get_woo_thousand_sep = get_option('woocommerce_price_thousand_sep');
-				$get_woo_decimal_sep = get_option('woocommerce_price_decimal_sep');
+				$get_woo_decimal_sep  = get_option('woocommerce_price_decimal_sep');
 
 				wp_localize_script( 'pvtfw-frontend-scripts', 'pre_info',
 					array( 
 						'pre_installed' => false, // Checking its companion plugin is active or not 
 						// note: false mean companinaion is not exist. (for future use)
-						'woo_curr' => $get_woo_curr,
-						'thousand_sep' => $get_woo_thousand_sep,
-						'decimal_sep' => $get_woo_decimal_sep
+						'woo_curr'      => $get_woo_curr,
+						'thousand_sep'  => $get_woo_thousand_sep,
+						'decimal_sep'   => $get_woo_decimal_sep
 					)
 				);
 
@@ -358,9 +358,9 @@ if( !class_exists('PVTFW_TABLE' )):
 					wp_enqueue_script('pvtfw-subtotal-calc-scripts', plugins_url('public/js/pvtfw_subtotal_calc.js', __FILE__), array('woocommerce','jquery', 'pvtfw-frontend-scripts'), PVTFW_VARIANT_TABLE_VERSION, true);
 					wp_localize_script( 'pvtfw-subtotal-calc-scripts', 'subtotal_object',
 						array( 
-							'currency_symbol' => get_woocommerce_currency_symbol(),
-							'thousand_sep' => $get_woo_thousand_sep,
-							'decimal_sep' => $get_woo_decimal_sep,
+							'currency_symbol'    => get_woocommerce_currency_symbol(),
+							'thousand_sep'       => $get_woo_thousand_sep,
+							'decimal_sep'        => $get_woo_decimal_sep,
 							// @note: use maximum `2` here. otherwise, it will add extra separator. 
 							'number_of_decimals' => apply_filters( 'pvtfw_num_of_decimal', 2, $get_woo_num_of_decimal ), 
 						)
@@ -410,7 +410,7 @@ if( !class_exists('PVTFW_TABLE' )):
 
 				$new_links = array(
 					'ticket' => '<a href="https://wpxtension.com/submit-a-ticket/" target="_blank" style="font-weight: bold; color: #8012f9;">'. __( 'Help & Support', 'product-variant-table-for-woocommerce' ) .'</a>',
-					'doc' => '<a href="https://wpxtension.com/doc-category/product-variation-table-for-woocommerce/" target="_blank">'. __( 'Documentation', 'product-variant-table-for-woocommerce' ) .'</a>'
+					'doc'    => '<a href="https://wpxtension.com/doc-category/product-variation-table-for-woocommerce/" target="_blank">'. __( 'Documentation', 'product-variant-table-for-woocommerce' ) .'</a>'
 				);
 				 
 				$plugin_meta = array_merge( $plugin_meta, $new_links );
