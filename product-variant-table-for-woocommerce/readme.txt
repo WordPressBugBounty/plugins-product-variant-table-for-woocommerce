@@ -4,7 +4,7 @@ Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
 Tested up to: 6.7
 Requires PHP: 5.6.20
-Stable tag: 1.6.4
+Stable tag: 1.6.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -176,13 +176,9 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.6.4 [10-02-2025] Monday =
-* Dev: Added `pvtfw_available_btn_product_id` for available options id.
-* Dev: Added `pvtfw_variation_table_heading_after` for table heading.
-* Update: Table sorting script.
-* Update: Settings page.
-* Update: Scripts and added necessary trigger.
-* Compatibility: WooCommerce 9.6.
+= 1.6.4.1 [18-02-2025] Tuesday =
+* Update: Availability condition.
+
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)
 

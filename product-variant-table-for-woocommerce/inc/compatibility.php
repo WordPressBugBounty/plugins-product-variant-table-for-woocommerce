@@ -331,15 +331,9 @@ if( !function_exists( 'pvt_push_in_stock_text' ) ){
 
     function pvt_push_in_stock_text( $availability, $product ){
 
-        if ( $product->is_in_stock() && $product->get_stock_quantity() === null ) {
+        if ( $product->is_in_stock() && $product->get_stock_quantity() === null && !$product->is_on_backorder( 1 ) ) {
 
             $availability = esc_html__( 'In Stock', 'product-variant-table-for-woocommerce' );
-
-        }
-
-        if ( $product->get_stock_status() === 'onbackorder' ) {
-
-            $availability = esc_html__( 'Available on backorder', 'product-variant-table-for-woocommerce' );
 
         }
 
@@ -399,11 +393,14 @@ if( !function_exists( 'pvt_display_cart_button' ) ){
  * =============================================================================
  * Callback function for `pvt_display_cart_button`
  * @since 1.5.5
+ * @updated 1.6.4.1
  * =============================================================================
  */
 if( !function_exists( 'pvt_cart_button_condition' ) ){
 
     function pvt_cart_button_condition( $args, $stock_info ){
+
+            $single_variation = wc_get_product( $args['variant_id'] );
 
             if( $args['stock_status'] === 'instock' || $args['stock_status'] === 'onbackorder' ){
                 echo wp_kses_post( 
@@ -441,9 +438,7 @@ if( !function_exists( 'pvt_cart_button_condition' ) ){
                         ),
                         $args['stock_status'] === 'onbackorder' ? 
                         apply_filters('pvtfw_cart_btn_after_backorder_text',
-                            sprintf('<p class="stock available-on-backorder pvt-available-on-backorder">%s</p>',
-                                esc_html__( 'Available on backorder', 'product-variant-table-for-woocommerce' )
-                            )
+                            wc_get_stock_html( $single_variation )
                         ) : ''
                     ) 
                 );
