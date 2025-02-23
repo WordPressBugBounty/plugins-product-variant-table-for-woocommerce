@@ -123,12 +123,13 @@
 					 * 
 					 **/
 					$options['action'][] = array(
-						'product_id' 	=> $product_id, 
-						'cart_url'		=> $cart_url, 
-						'product_url'	=> $product_url, 
-						'variant_id'	=> $variant_id, 
-						'stock_status'	=> $single_variation->get_stock_status(),
-						'text'			=> $text
+						'product_id'        => $product_id, 
+						'cart_url'          => $cart_url, 
+						'product_url'       => $product_url, 
+						'variant_id'        => $variant_id, 
+						'stock_status'      => $single_variation->get_stock_status(),
+						'text'              => $text,
+						'availability_html' => wc_get_stock_html( $single_variation ),
 					);
 				endif;
 			}

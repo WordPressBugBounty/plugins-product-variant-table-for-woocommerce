@@ -394,78 +394,77 @@ if( !function_exists( 'pvt_display_cart_button' ) ){
  * Callback function for `pvt_display_cart_button`
  * @since 1.5.5
  * @updated 1.6.4.1
+ * @updated 1.7.0
  * =============================================================================
  */
 if( !function_exists( 'pvt_cart_button_condition' ) ){
 
     function pvt_cart_button_condition( $args, $stock_info ){
 
-            $single_variation = wc_get_product( $args['variant_id'] );
+        if( $args['stock_status'] === 'instock' || $args['stock_status'] === 'onbackorder' ){
+            echo wp_kses_post( 
+                sprintf('<button data-product-id="%s" data-url="%s" data-product="%s" data-variant="%s" class="%s">
+                    <span class="pvtfw-btn-text">%s</span> 
+                    <div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
+                    </button>%s', 
+                    $args['product_id'], 
+                    $args['cart_url'], 
+                    $args['product_url'], 
+                    $args['variant_id'], 
+                    /**
+                     *
+                     * Hook: pvtfw_add_to_cart_btn_classes
+                     * Hook: pvtfw_cart_btn_text
+                     * 
+                     * @since version 1.4.16 
+                     * 
+                     **/
+                    apply_filters( 'pvtfw_add_to_cart_btn_classes', 
+                        wp_is_block_theme() ? 'wp-block-button__link wp-element-button wc-block-components-product-button__button pvtfw_variant_table_cart_btn' : 'pvtfw_variant_table_cart_btn button alt' 
+                    ),
+                    apply_filters( 'pvtfw_cart_btn_text', 
+                        
+                        /* 
+                         * @note: If it is coming from plugin settings it will not translate. Because, dynamic text
+                         * is not translatable.
+                         * 
+                         * @recommendation: Contact through our support forum
+                         * 
+                         * @link: https://localise.biz/wordpress/plugin/intro#content
+                         */
+                        $args['text']
 
-            if( $args['stock_status'] === 'instock' || $args['stock_status'] === 'onbackorder' ){
-                echo wp_kses_post( 
-                    sprintf('<button data-product-id="%s" data-url="%s" data-product="%s" data-variant="%s" class="%s">
+                    ),
+                    $args['stock_status'] === 'onbackorder' ? 
+                    apply_filters('pvtfw_cart_btn_after_backorder_text',
+                        $args['availability_html']
+                    ) : ''
+                ) 
+            );
+        }
+        if( $args['stock_status'] === 'outofstock' ){
+            echo wp_kses_post( 
+                sprintf('<button class="%s" disabled>
                         <span class="pvtfw-btn-text">%s</span> 
                         <div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
-                        </button>%s', 
-                        $args['product_id'], 
-                        $args['cart_url'], 
-                        $args['product_url'], 
-                        $args['variant_id'], 
+                        </button>', 
                         /**
                          *
                          * Hook: pvtfw_add_to_cart_btn_classes
-                         * Hook: pvtfw_cart_btn_text
+                         * Hook: pvtfw_stock_btn_text
                          * 
                          * @since version 1.4.16 
+                         * 
+                         * @version 1.4.18 { hook renamed to `pvtfw_stock_btn_text` from `pvtfw_cart_btn_text` }
                          * 
                          **/
                         apply_filters( 'pvtfw_add_to_cart_btn_classes', 
                             wp_is_block_theme() ? 'wp-block-button__link wp-element-button wc-block-components-product-button__button pvtfw_variant_table_cart_btn' : 'pvtfw_variant_table_cart_btn button alt' 
                         ),
-                        apply_filters( 'pvtfw_cart_btn_text', 
-                            
-                            /* 
-                             * @note: If it is coming from plugin settings it will not translate. Because, dynamic text
-                             * is not translatable.
-                             * 
-                             * @recommendation: Contact through our support forum
-                             * 
-                             * @link: https://localise.biz/wordpress/plugin/intro#content
-                             */
-                            $args['text']
-
-                        ),
-                        $args['stock_status'] === 'onbackorder' ? 
-                        apply_filters('pvtfw_cart_btn_after_backorder_text',
-                            wc_get_stock_html( $single_variation )
-                        ) : ''
-                    ) 
-                );
-            }
-            if( $args['stock_status'] === 'outofstock' ){
-                echo wp_kses_post( 
-                    sprintf('<button class="%s" disabled>
-                            <span class="pvtfw-btn-text">%s</span> 
-                            <div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
-                            </button>', 
-                            /**
-                             *
-                             * Hook: pvtfw_add_to_cart_btn_classes
-                             * Hook: pvtfw_stock_btn_text
-                             * 
-                             * @since version 1.4.16 
-                             * 
-                             * @version 1.4.18 { hook renamed to `pvtfw_stock_btn_text` from `pvtfw_cart_btn_text` }
-                             * 
-                             **/
-                            apply_filters( 'pvtfw_add_to_cart_btn_classes', 
-                                wp_is_block_theme() ? 'wp-block-button__link wp-element-button wc-block-components-product-button__button pvtfw_variant_table_cart_btn' : 'pvtfw_variant_table_cart_btn button alt' 
-                            ),
-                            apply_filters( 'pvtfw_stock_btn_text', $stock_info ) 
-                    ) 
-                );
-            }
+                        apply_filters( 'pvtfw_stock_btn_text', $stock_info ) 
+                ) 
+            );
+        }
 
 
     }

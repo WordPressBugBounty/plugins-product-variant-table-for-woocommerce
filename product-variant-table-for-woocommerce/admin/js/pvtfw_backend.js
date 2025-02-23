@@ -22,8 +22,20 @@
         $('div.form-section').hide();
         $('div.form-section#'+target).show();
 
+        // Adding the target as a class for the submit <p> tag
+        $('p.submit').attr('data-taget', target);
+
 
         $('div.form-section input[name=pvtfw_variant_table_tab]').val(target);
+
+        // Checking if the nav a has a class "lock"
+        if( $(this).hasClass('lock') ){
+          // If has a lock class, hide the submit <p> block using the target
+          $('p.submit[data-taget="'+target+'"]').hide();
+        }
+        else{
+          $('p.submit[data-taget ="'+target+'"]').show();
+        }
 
     });
 
@@ -116,6 +128,9 @@
       else{
         $('tr[data-child=scrollbar-child').hide();
       }
+
+      // Color Picker
+      $('.color-field').wpColorPicker();
 
 
 })(jQuery);

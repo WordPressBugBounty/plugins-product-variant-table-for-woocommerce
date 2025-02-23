@@ -18,15 +18,32 @@
     }
 }
 
+.pvtfw_variant_table_block table.variant{
+    table-layout: fixed;
+}
 
-.pvtfw_variant_table_block table.variant th {
+.pvtfw_variant_table_block table.variant,
+.pvtfw_variant_table_block table.variant thead th,
+.pvtfw_variant_table_block table.variant tbody td,
+.pvtfw_variant_table_block table.variant tfoot td {
+    border: var( --pvtfw-table-border-color, #eee ) solid var( --pvtfw-table-border-width, 1px );
+    border-collapse: collapse;
+}
+
+
+.pvtfw_variant_table_block table.variant thead th {
     cursor: pointer;
     white-space: nowrap;
     display: table-cell;
-    border: #eee solid 1px;
-    padding: 10px;
+    padding: var( --pvtfw-table-header-padding, 10px );
     vertical-align: middle;
     font-weight: normal;
+    text-align: var( --pvtfw-table-header-alignment, left );
+}
+
+.pvtfw_variant_table_block table.variant:not( .has-background ) thead th{
+    background-color: var( --pvtfw-table-header-bg-color, #f8f8f8 );
+    color: var( --pvtfw-table-header-text-color, #6d6d6d );
 }
 
 .pvtfw_variant_table_block table.variant th {
@@ -99,27 +116,33 @@
     display: table-row;
 }
 
-.pvtfw_variant_table_block table.variant td {
+.pvtfw_variant_table_block table.variant tbody td {
     display: table-cell;
-    border: #eee solid 1px;
-    padding: 10px;
+    padding: var( --pvtfw-table-body-padding, 10px );
     vertical-align: middle;
+    text-align: var( --pvtfw-table-body-alignment, left );
+    background-color: transparent !important;
+    color: var( --pvtfw-table-body-text-color, #6d6d6d );
+}
+
+.pvtfw_variant_table_block table.variant tbody tr:nth-child(even) {
+  background-color: var( --pvtfw-table-body-bg-color-even, #ffffff );
 }
 
 .pvtfw_variant_table_block table.variant tbody tr:nth-child(odd) {
-  background-color: #f8f8f8;
+  background-color: var( --pvtfw-table-body-bg-color-odd, #fbfbfb );
 }
 
-.pvtfw_variant_table_block table.variant th.dsc .arrow {
+.pvtfw_variant_table_block table.variant thead th.dsc .arrow {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-bottom: 4px solid #666666;
+    border-bottom: 4px solid var( --pvtfw-table-header-arrow-color, #666666 );
 }
 
-.pvtfw_variant_table_block table.variant th.asc .arrow {
+.pvtfw_variant_table_block table.variant thead th.asc .arrow {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 4px solid #666666;
+    border-top: 4px solid var( --pvtfw-table-header-arrow-color, #666666 );
 }
 
 .variant-table h3.available-title {
@@ -160,15 +183,6 @@
 
 .pvtfw_variant_table_block table.variant td .added_to_cart {
     display: none;
-}
-
-/* Pagination Style  */
-.pvtfw_variant_table_block table.variant a.btn.active {
-    background-color: var(--wp--preset--color--cyan-bluish-gray);
-    color: var(--wp--preset--color--white);
-    display: inline-block;
-    width: 25px;
-    text-align: center;
 }
 
 /* Quantity field CSS +/- input  */

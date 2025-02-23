@@ -287,7 +287,9 @@ if( !class_exists('PVTFW_ADVANCE' )):
 
         function new_setting_tab($tab, $curTab){
 
-            $tab .= "<a href='#advanced' data-target='advanced' class='nav-tab ".($curTab==='advanced' ? 'nav-tab-active' : null)."'>".PVTFW_COMMON::badge('Pro', 'return').__('Advanced', 'product-variant-table-for-woocommerce')."</a>";
+            $lock_class = !PVTFW_TABLE::is_pvtfw_pro_Active() ? esc_attr( 'lock' ) : '';
+
+            $tab .= "<a href='#advanced' data-target='advanced' class='nav-tab ".($curTab==='advanced' ? 'nav-tab-active ' : null).$lock_class."'>".PVTFW_COMMON::badge('Pro', 'return').__('Advanced', 'product-variant-table-for-woocommerce')."</a>";
             
             return $tab;
 

@@ -1,7 +1,7 @@
 /* Media Query */
 
 @media screen and (max-width: 767px) {
-    .pvtfw_variant_table_block table.variant td:before {
+    .pvtfw_variant_table_block table.variant tbody td:before {
         content: attr(data-title);
         text-transform: uppercase;
         font-weight: bold;
@@ -15,7 +15,7 @@
     .pvtfw_variant_table_block table.variant td>span {
         display: table-cell;
     }
-    .pvtfw_variant_table_block table.variant td {
+    .pvtfw_variant_table_block table.variant tbody td {
         max-width: none;
         display: table;
         line-height: 1.5em;

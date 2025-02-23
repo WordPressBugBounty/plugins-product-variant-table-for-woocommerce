@@ -7,7 +7,7 @@ Author: WPXtension
 Author URI: https://wpxtension.com/
 Text Domain: product-variant-table-for-woocommerce
 Domain Path: /languages
-Version: 1.6.4.1
+Version: 1.7.0
 Requires at least: 4.7.0
 Requires PHP: 5.6.20
 WC requires at least: 3.0.0
@@ -32,8 +32,8 @@ if (!defined('ABSPATH')) {
  * ====================================================
  */
 
-define("PVTFW_VARIANT_TABLE_VERSION", '1.6.4.1');
-define("PVTFW_REQUIRED_PRO_VERSION", '1.6.0');
+define("PVTFW_VARIANT_TABLE_VERSION", '1.7.0');
+define("PVTFW_REQUIRED_PRO_VERSION", '1.7.0');
 define("PVTFW_DIR", plugin_dir_path(__FILE__) );
 define("PVTFW_FILE", plugin_basename(__FILE__));
 
@@ -129,6 +129,7 @@ if( !class_exists('PVTFW_TABLE' )):
 			require_once PVTFW_DIR.'inc/admin/class_pvtfw_form.php';
 			require_once PVTFW_DIR.'inc/admin/class_pvtfw_settings.php';
 			require_once PVTFW_DIR.'inc/admin/class_pvtfw_advance.php';
+			require_once PVTFW_DIR.'inc/admin/class_pvtfw_styling.php';
 
 			require_once PVTFW_DIR.'inc/frontend/class_pvtfw_print_table.php';
 			require_once PVTFW_DIR.'inc/frontend/class_pvtfw_available_btn.php';
@@ -252,22 +253,47 @@ if( !class_exists('PVTFW_TABLE' )):
 		 * ====================================================
 		 */
 		public function register_settings(){
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_place' ); 
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_columns');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_show_available_options_btn');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_available_options_btn_text');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_show_available_options_text');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_cart_btn_text');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_show_table_header');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_qty_layout');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_sub_total');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_scroll_to_top');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_cart_notice');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_full_table');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_scrollable_x');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_min_width');
-			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_tab');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_place', 'sanitize_text_field' ); 
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_columns', array( $this, 'sanitize_array' ) );  // phpcs:disable PluginCheck.CodeAnalysis.SettingSanitization.register_settingDynamic
+			//--> Sanitized the option inside the `sanitize_array` method 
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_show_available_options_btn', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_available_options_btn_text', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_show_available_options_text', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_cart_btn_text', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_show_table_header', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_qty_layout', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_sub_total', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_scroll_to_top', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_cart_notice', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_full_table', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_scrollable_x', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_min_width', 'sanitize_text_field');
+			register_setting('pvtfw_variant_table_settings', 'pvtfw_variant_table_tab', 'sanitize_text_field');
 		}
+
+		/**
+		 *====================================================
+	     * Sanitize the array
+	     *
+	     * @param      array  $options           The address input.
+	     *
+	     * @return     array  $santized_options  The sanitized input.
+		 *====================================================
+	     */
+	    public function sanitize_array( $options ) : array{
+
+	        // Initialize the new array that will hold the sanitize values
+	        $santized_options = array();
+
+	        // Loop through the options and sanitize each of the values
+	        foreach ( $options as $key => $value ) {
+	            $santized_options[ $key ] = ( isset( $options[ $key ] ) ) ?
+	            sanitize_text_field( $value ) :
+	            '';
+	        }
+
+	        return $santized_options;
+	    }
 		 
 
 
@@ -297,8 +323,11 @@ if( !class_exists('PVTFW_TABLE' )):
 				$curTab           = PVTFW_COMMON::pvtfw_get_options()->curTab;
 				$scrollableTableX = PVTFW_COMMON::pvtfw_get_options()->scrollableTableX;
 
+				wp_enqueue_style('wp-color-picker');
+
 				wp_enqueue_script('jquery-ui-sortable');
-				wp_enqueue_script('pvtfw-admin-scripts', plugins_url('admin/js/pvtfw_backend.js', __FILE__), array('jquery'), PVTFW_VARIANT_TABLE_VERSION, true);
+				
+				wp_enqueue_script('pvtfw-admin-scripts', plugins_url('admin/js/pvtfw_backend.js', __FILE__), array('jquery', 'wp-color-picker'), PVTFW_VARIANT_TABLE_VERSION, true);
 				wp_localize_script( 'pvtfw-admin-scripts', 'table_object',
 					array( 
 						'tab_active' => $curTab,

@@ -4,7 +4,7 @@ Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
 Tested up to: 6.7
 Requires PHP: 5.6.20
-Stable tag: 1.6.4.1
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,8 @@ With the extended version of this plugin, you can take your product variation ta
 🎨 Compatible with Back In Stock Notifier Plugin; you can display the inline form/popup button in the table.
 🎨 Support for the Min/Max Step control plugin empowers you to apply those rules inside the variation table too.
 🎨 Have a long list of variations! Apply vertical scrolling for a better user experience.
+🎨 Display Ajax Variation Table Popup using `Display Rule`
+🎨 Customize the Variation Table design (Header, Table Body, and Footer) as you want.
 
 
 Currently, it has support for the following plugins:
@@ -176,9 +178,12 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.6.4.1 [18-02-2025] Tuesday =
-* Update: Availability condition.
-
+= 1.7.0 [22-02-2025] Sunday =
+* Update: Settings framework.
+* Update:`$options` array.
+* Update: Availability text condition and optimize the code at compatiblilty.php.
+* Update: Scripts and added necessary trigger.
+* Check: WPCS.
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)
 
