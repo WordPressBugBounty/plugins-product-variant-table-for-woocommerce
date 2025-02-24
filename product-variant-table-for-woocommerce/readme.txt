@@ -4,7 +4,7 @@ Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
 Tested up to: 6.7
 Requires PHP: 5.6.20
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,20 +178,17 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.7.0 [22-02-2025] Sunday =
-* Update: Settings framework.
-* Update:`$options` array.
-* Update: Availability text condition and optimize the code at compatiblilty.php.
-* Update: Scripts and added necessary trigger.
-* Check: WPCS.
+= 1.7.1 [24-02-2025] Monday =
+* Update: CSS and checked with autoprefixers.
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)
 
 
 == Upgrade Notice ==
 
-= 1.6.2 =
-* Fix: Minor conditional fix.
-* Enhancement: UI of Advanced tab.
-* Update: Codebase based on Plugin Check Plugin(PCP).
-
+= 1.7.0 [23-02-2025] Sunday =
+* Update: Settings framework.
+* Update:`$options` array.
+* Update: Availability text condition and optimize the code at compatiblilty.php.
+* Update: Scripts and added necessary trigger.
+* Check: WPCS.

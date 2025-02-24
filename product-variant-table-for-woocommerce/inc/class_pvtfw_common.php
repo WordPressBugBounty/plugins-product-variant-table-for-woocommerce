@@ -227,7 +227,10 @@ if( !class_exists('PVTFW_COMMON' )):
                     'name' => array(),
                     'value' => array(),
                 ),
-                'td' => array()
+                'td' => array(
+                    'class' => array(),
+                ),
+                'div' => array(),
             ) );
         }
         

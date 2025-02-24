@@ -1,7 +1,8 @@
 /* Spinner */
 .spinner-wrap {
     display: none;
-    animation: rotate 1.5s linear infinite;
+    -webkit-animation: rotate 1.5s linear infinite;
+            animation: rotate 1.5s linear infinite;
 }
 
 .spinner-wrap .flaticon-spinner-of-dots::before {
@@ -9,17 +10,30 @@
     font-size: 12px;
 }
   
-@keyframes rotate {
+@-webkit-keyframes rotate {
     0% { 
-        transform: rotate(0); 
+        -webkit-transform: rotate(0); 
+                transform: rotate(0); 
     }
     100% { 
-        transform: rotate(359deg);
+        -webkit-transform: rotate(359deg); 
+                transform: rotate(359deg);
+    }
+}
+  
+@keyframes rotate {
+    0% { 
+        -webkit-transform: rotate(0); 
+                transform: rotate(0); 
+    }
+    100% { 
+        -webkit-transform: rotate(359deg); 
+                transform: rotate(359deg);
     }
 }
 
 .pvtfw_variant_table_block table.variant{
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 .pvtfw_variant_table_block table.variant,
@@ -123,6 +137,8 @@
     text-align: var( --pvtfw-table-body-alignment, left );
     background-color: transparent !important;
     color: var( --pvtfw-table-body-text-color, #6d6d6d );
+    white-space: nowrap;
+    text-wrap: auto;
 }
 
 .pvtfw_variant_table_block table.variant tbody tr:nth-child(even) {
@@ -189,8 +205,12 @@
 .pvt-qty-input{
     color: #000;
     background: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     overflow: hidden;
     max-width: 100px;
     max-height: 35px;
@@ -262,7 +282,9 @@
   border-left: 1px solid #e2e2e2;
 }
 .pvt-qty-input .qty-count--add:after {
-  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 .pvt-qty-input .qty-count:disabled {
   color: #ccc;
