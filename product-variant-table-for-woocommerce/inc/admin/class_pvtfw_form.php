@@ -323,14 +323,15 @@ if( !class_exists('PVTFW_FORM' )):
             if( isset( $_GET['action'] ) && ('pvtfw_reset_columns' === $_GET['action']) ){
 
                 //In our file that handles the request, verify the nonce.
-                if ( isset( $_REQUEST['_wpnonce'] ) && ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'pvtfw-reset-column-settings' ) ) {
-                    die( esc_html__( 'Security check', 'product-variant-table-for-woocommerce' ) ); 
-                } else {
-                    
+                if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wpnonce'] ) ), 'pvtfw-reset-column-settings' ) ) {
                     delete_option('pvtfw_variant_table_columns');
                     update_option('pvtfw_variant_table_tab', '');
                     wp_safe_redirect( admin_url( 'admin.php?page=pvtfw_variant_table' ) );
                     exit();
+                     
+                } else {
+                    
+                    die( esc_html__( 'Security check', 'product-variant-table-for-woocommerce' ) );
 
                 }
 
@@ -351,10 +352,7 @@ if( !class_exists('PVTFW_FORM' )):
             if( isset( $_GET['action'] ) && ('pvtfw_reset_all' === $_GET['action']) ){
 
                 //In our file that handles the request, verify the nonce.
-                if ( isset( $_REQUEST['_wpnonce'] ) && ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'pvtfw-reset-all-settings' ) ) {
-                    die( esc_html__( 'Security check', 'product-variant-table-for-woocommerce' ) ); 
-                } else {
-                    
+                if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_GET['_wpnonce'] ) ), 'pvtfw-reset-all-settings' ) ) {
                     $free_options_array = PVTFW_COMMON::plugin_options();
 
                     if( ( PVTFW_TABLE::is_pvtfw_pro_Active() ) ){
@@ -371,7 +369,9 @@ if( !class_exists('PVTFW_FORM' )):
                     }
                     wp_safe_redirect( admin_url( 'admin.php?page=pvtfw_variant_table' ) );
                     exit();
-
+                } else {
+                    
+                    die( esc_html__( 'Security check', 'product-variant-table-for-woocommerce' ) ); 
                 }
 
             }

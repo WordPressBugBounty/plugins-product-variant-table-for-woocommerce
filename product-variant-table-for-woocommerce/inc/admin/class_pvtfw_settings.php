@@ -57,6 +57,10 @@ if( !class_exists('PVTFW_SETTINGS' )):
             if ( ! current_user_can( 'manage_options' ) ) {
                 return;
             }
+            // Checking nonce of option page form submission
+            if ( isset($_POST['action']) && !wp_verify_nonce( sanitize_key( wp_unslash( 'action', 'action' ) ) ) ){
+                wp_die();
+            }
             
         ?>
     
