@@ -55,9 +55,7 @@ if( !class_exists('PVTFW_CART' ) ):
             
                         quantity: qty,
             
-                        variation_id: variant_id,
-
-                        pvt_security: '<?php echo esc_attr( wp_create_nonce( 'pvtfw-single-cart-nonce' ) ); ?>'
+                        variation_id: variant_id
                     };
             
             
@@ -160,15 +158,16 @@ if( !class_exists('PVTFW_CART' ) ):
         
             if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id) && 'publish' === $product_status) { 
         
-                do_action('pvtfw_woocommerce_ajax_added_to_cart', $product_id);
+                do_action('woocommerce_ajax_added_to_cart', $product_id);
         
-                    if ('yes' === get_option('pvtfw_woocommerce_cart_redirect_after_add')) { 
-        
-                        return wc_add_to_cart_message(array($product_id => $quantity), true); 
-                    } 
-        
-                    wc_add_to_cart_message([ $variation_id => $quantity ], true); 
-                    WC_AJAX::get_refreshed_fragments(); 
+                if ('yes' === get_option('pvtfw_woocommerce_cart_redirect_after_add')) { 
+    
+                    return wc_add_to_cart_message(array($product_id => $quantity), true); 
+                } 
+    
+                wc_add_to_cart_message([ $variation_id => $quantity ], true); 
+
+                WC_AJAX::get_refreshed_fragments();
         
             } 
             else { 
@@ -184,9 +183,9 @@ if( !class_exists('PVTFW_CART' ) ):
         
                 // echo wp_send_json($data);
                 wc_add_to_cart_message(  $product_id,  $quantity ,  $return = false ); 
-                WC_AJAX::get_refreshed_fragments(); 
+                WC_AJAX::get_refreshed_fragments();
         
-            }
+            } 
         
             wp_die();
         
@@ -201,27 +200,27 @@ if( !class_exists('PVTFW_CART' ) ):
 
             $cartNotice = PVTFW_COMMON::pvtfw_get_options()->cartNotice;
 
-                $all_notices  = WC()->session->get( 'wc_notices', array() );
-            
-            
-                $notice_types = apply_filters( 'woocommerce_notice_types', array( 'error', 'success', 'notice' ) );
+            $all_notices  = WC()->session->get( 'wc_notices', array() );
+        
+        
+            $notice_types = apply_filters( 'woocommerce_notice_types', array( 'error', 'success', 'notice' ) );
 
-                if($cartNotice == 'on'):
-                    ob_start();
-                    foreach ( $notice_types as $notice_type ) {
-                        if ( wc_notice_count( $notice_type ) > 0 ) {
-                            wc_get_template( "notices/{$notice_type}.php", array(
-                                'notices' => array_filter( $all_notices[ $notice_type ] ),
-                            ) );
-                        }
+            if($cartNotice == 'on'):
+                ob_start();
+                foreach ( $notice_types as $notice_type ) {
+                    if ( wc_notice_count( $notice_type ) > 0 ) {
+                        wc_get_template( "notices/{$notice_type}.php", array(
+                            'notices' => array_filter( $all_notices[ $notice_type ] ),
+                        ) );
                     }
-                    $fragments['notices_html'] = ob_get_clean();
+                }
+                $fragments['notices_html'] = ob_get_clean();
 
-                endif;
+            endif;
 
-                wc_clear_notices();
+            wc_clear_notices();
 
-                return $fragments;
+            return $fragments;
         }
 
         /**

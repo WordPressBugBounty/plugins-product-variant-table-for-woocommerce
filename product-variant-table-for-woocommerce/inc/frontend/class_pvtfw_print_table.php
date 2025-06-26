@@ -69,16 +69,12 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
                     <h2 id="variant-table">
                         <?php echo esc_html( apply_filters('pvtfw_variant_table_varaints_heading', __('Available Options', 'product-variant-table-for-woocommerce')) ); ?>
                     </h2>
-                    <?php 
-                        // Hook to display anything after the table heading
-                        do_action('pvtfw_variation_table_heading_after'); 
-                    ?>
                 </div>
 
                 <?php
 
                 // Hook to display anything before the table
-                do_action('pvtfw_variation_table_before');
+                do_action('pvtfw_variation_table_before', $product);
 
                 // Scrollable classes adding
                 $scrollableTableX = PVTFW_COMMON::pvtfw_get_options()->scrollableTableX;
@@ -99,10 +95,11 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
                      * { Before table block }
                      * 
                      */
-                    do_action('pvtfw_before_table_block');
+                    do_action('pvtfw_before_table_block', $product);
 
                     ?>
                     <div class="pvtfw_variant_table_block <?php echo esc_attr( apply_filters('pvtfw_table_container_class', $classes, $scrollableTableX) ); ?>">
+
                         <table class="variant">
                             <thead>
                                 <tr>
@@ -142,7 +139,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
                      * { After table block }
                      * 
                      */
-                    do_action('pvtfw_after_table_block');
+                    do_action('pvtfw_after_table_block', $product);
 
                     ?>
 
@@ -150,7 +147,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
 
                 <?php
                         // Hook to display anything after the table
-                        do_action('pvtfw_variation_table_after');
+                        do_action('pvtfw_variation_table_after', $product);
 
                     }
                     else {
@@ -216,7 +213,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
                     <?php
 
                     // Hook to display anything before the table
-                    do_action('pvtfw_variation_table_before');
+                    do_action('pvtfw_variation_table_before', $get_product);
 
                     // Scrollable classes adding
                     $scrollableTableX = PVTFW_COMMON::pvtfw_get_options()->scrollableTableX;
@@ -239,7 +236,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
                              * { Before table block }
                              * 
                              */
-                            do_action('pvtfw_before_table_block');
+                            do_action('pvtfw_before_table_block', $get_product);
 
                         ?>
 
@@ -283,7 +280,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
                          * { After table block }
                          * 
                          */
-                        do_action('pvtfw_after_table_block');
+                        do_action('pvtfw_after_table_block', $get_product);
 
                         ?>
 
@@ -292,7 +289,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
 
                     <?php
                     // Hook to display anything after the table
-                    do_action('pvtfw_variation_table_after');
+                    do_action('pvtfw_variation_table_after', $get_product);
 
                     
                 }

@@ -2,9 +2,9 @@
 Contributors: wpxteam, hakik, rudolfl
 Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 5.6.20
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,9 +178,11 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.7.2 [27-02-2025] Thursday =
-* Security: Checked codebase.
-* Compatibility: WooCommerce 9.7.
+= 1.7.3 [26-06-2025] Thursday =
+* Update: Script for decimal values when used `hide-trailing-zeros-on-prices`.
+* Update: Compatibility with `Fast Cart for WooCommerce` plugin's `Popup` feature.
+* Compatibility: WooCommerce 9.9 & WordPress 6.8.
+
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)
 

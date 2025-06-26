@@ -20,12 +20,14 @@
 
     });
 
+    // If the pre_info.pre_installed returns falsey value(false, null, undefined, 0, NaN, or an empty string). 
+    // For example: false
     if( !pre_info.pre_installed ){
 
       // console.log(pre_info);
 
       $('table.variant')
-      .on('click', 'th:not(.fancySearchRow th)', function () {
+      .on('click', 'tr:not(.fancytablesearch, .fancytablecolumnsearch) th:not(.fancytablepagination)', function () {
         var index = $(this).index(),
             rows = [],
             thColHead = $(this).hasClass( 'price_html' ) ? 'price' : $(this).attr('class');
@@ -83,8 +85,12 @@
           }
           // Checking Decimal Separator, if found then remove the decimal separator
           if( aValue.includes(pre_info.decimal_sep) || bValue.includes(pre_info.decimal_sep) ){
-            aValue = aValue.replace(pre_info.decimal_sep,'');
-            bValue = bValue.replace(pre_info.decimal_sep,'');
+            // Forcefully, replacing the decimal separator by `.` to compare values later
+            // @added: 1.7.3
+            // @note: It will help to compare the numeric value when forcefully removed trailing zeros on prices
+            // @see: https://woocommerce.com/document/hide-trailing-zeros-on-prices/
+            aValue = aValue.replace(pre_info.decimal_sep,'.');
+            bValue = bValue.replace(pre_info.decimal_sep,'.');
           }
           // Checking Thousand Separator, if found then remove the thousand separator
           if( aValue.includes(pre_info.thousand_sep) || bValue.includes(pre_info.thousand_sep) ){
@@ -143,7 +149,7 @@
        * @since 1.4.18
        */
 
-      $inputs.change(function () {
+      $inputs.on( 'change', function () {
         var $this = $(this);
         var $minusBtn = $this.siblings(".qty-count--minus");
         var $addBtn = $this.siblings(".qty-count--add");
@@ -175,7 +181,7 @@
         }
       });
 
-      $countBtn.click(function () {
+      $countBtn.on( 'click', function () {
         var operator = this.dataset.action;
         var $this = $(this);
         var $input = $this.closest(".pvt-qty-input").find("input.input-text.qty.text");
