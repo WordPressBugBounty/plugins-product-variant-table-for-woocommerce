@@ -29,7 +29,27 @@ if( !class_exists('PVTFW_CART' ) ):
         function ajax_wc_button_script() {
         ?>
             <script id="pvtfw-add-to-cart-js" type="text/javascript">
+
+            /**
+             * To avoid polluting the global scope or clashing with other plugins, using a namespace `ProductVariationTable`
+             * 
+             * We will store the previous quantity values here.
+             * 
+             */
+            window.ProductVariationTable = window.ProductVariationTable || {};
+            window.ProductVariationTable.previousQty = {};
+
             jQuery(document).ready(function($) {
+
+                // Pushing the initial quatity values to store.
+                $('table.variant tbody input.qty').each(function() {
+                    const $input = $(this);
+                    const productId = $input.attr('id');
+                    if (productId) {
+                        window.ProductVariationTable.previousQty[productId] = $input.val();
+                    }
+                });
+
                 $(document.body).on('click', '.pvtfw_variant_table_cart_btn', function(e) {
                     e.preventDefault();
                     var $thisbutton = $(this);
@@ -107,7 +127,13 @@ if( !class_exists('PVTFW_CART' ) ):
                                 if ($('.woocommerce-notices-wrapper').find('.woocommerce-error').length > 0) {
                                     $('.woocommerce-notices-wrapper .woocommerce-message').remove();
                                 }
+
+                                // Reset quantity field
+                                if( variant_id && window.ProductVariationTable.previousQty[variant_id] ){
+                                    $thisbutton.closest('tr').find('input.qty').val( window.ProductVariationTable.previousQty[variant_id] ).trigger('change'); // Triggering `change` event to calculate the subTotal column value
+                                }
             
+                                // Then initiate scroll behavior
                                 <?php $scrollToTop = PVTFW_COMMON::pvtfw_get_options()->scrollToTop; if($scrollToTop == "on"): ?>
                                         $("html, body").animate({
                                             scrollTop: 0

@@ -319,3 +319,8 @@
 .pvt_loaded.woocommerce-page .input-text {
     padding: 0;
 }
+
+/* Table Header Style  */
+.pvtfw-table-heading-continer{
+    clear: both;
+}

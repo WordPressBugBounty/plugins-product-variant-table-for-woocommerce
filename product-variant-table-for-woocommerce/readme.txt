@@ -4,7 +4,7 @@ Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
 Tested up to: 6.8
 Requires PHP: 5.6.20
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,10 +178,11 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.7.3 [26-06-2025] Thursday =
-* Update: Script for decimal values when used `hide-trailing-zeros-on-prices`.
-* Update: Compatibility with `Fast Cart for WooCommerce` plugin's `Popup` feature.
-* Compatibility: WooCommerce 9.9 & WordPress 6.8.
+= 1.7.4 [13-08-2025] Wednesday =
+* Update: Script (to return the first quantity value after successful carted).
+* Remove: `load_plugin_textdomain()` as it has been discouraged since WordPress version 4.6. When a plugin is hosted on WordPress.org, it is not necessary to manually include this function call for translations under the plugin slug. WordPress will automatically load the translations when needed.
+* Fix: Style (to display table header in correct place).
+* Compatibility: WooCommerce 10.1.0.
 
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)

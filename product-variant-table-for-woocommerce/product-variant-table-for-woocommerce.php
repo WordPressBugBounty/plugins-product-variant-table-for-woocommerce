@@ -7,11 +7,11 @@ Author: WPXtension
 Author URI: https://wpxtension.com/
 Text Domain: product-variant-table-for-woocommerce
 Domain Path: /languages
-Version: 1.7.3
+Version: 1.7.4
 Requires at least: 4.7.0
 Requires PHP: 5.6.20
 WC requires at least: 3.0.0
-WC tested up to: 9.9
+WC tested up to: 10.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -32,7 +32,7 @@ if (!defined('ABSPATH')) {
  * ====================================================
  */
 
-define("PVTFW_VARIANT_TABLE_VERSION", '1.7.3');
+define("PVTFW_VARIANT_TABLE_VERSION", '1.7.4');
 define("PVTFW_REQUIRED_PRO_VERSION", '1.7.0');
 define("PVTFW_DIR", plugin_dir_path(__FILE__) );
 define("PVTFW_FILE", plugin_basename(__FILE__));
@@ -102,15 +102,6 @@ if( !class_exists('PVTFW_TABLE' )):
 			echo wp_kses_post( '<div class="error"><p><strong>' . __('Product Variation Table For Woocommerce - PVT', 'product-variant-table-for-woocommerce') . '</strong> ' . sprintf(__('requires %1$sWooCommerce%2$s to be installed & activated!', 'product-variant-table-for-woocommerce'), '<a href="http://wordpress.org/extend/plugins/woocommerce/">', '</a>') . '</p></div>' );
 		}
 
-		/**
-		* ====================================================
-		* Load Text Domain Folder
-		* ====================================================
-		**/
-		function load_textdomain() {
-			load_plugin_textdomain( "product-variant-table-for-woocommerce", false, basename( dirname( __FILE__ ) )."/languages" );
-		}
-
 
 		/**
 		* ====================================================
@@ -153,7 +144,6 @@ if( !class_exists('PVTFW_TABLE' )):
 		 * ====================================================
 		 */
 		public function hooks() {
-			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 
 			// Plugin Action links
