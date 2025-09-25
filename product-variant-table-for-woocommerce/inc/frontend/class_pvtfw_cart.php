@@ -130,7 +130,7 @@ if( !class_exists('PVTFW_CART' ) ):
 
                                 // Reset quantity field
                                 if( variant_id && window.ProductVariationTable.previousQty[variant_id] ){
-                                    $thisbutton.closest('tr').find('input.qty').val( window.ProductVariationTable.previousQty[variant_id] ).trigger('change'); // Triggering `change` event to calculate the subTotal column value
+                                    $thisbutton.closest('tr').find('input.qty').val( window.ProductVariationTable.previousQty[variant_id] ).trigger('change', ['button']); // Triggering `change` event to calculate the subTotal column value. Sending the `button` to determine that the event is triggered by cart button.
                                 }
             
                                 // Then initiate scroll behavior

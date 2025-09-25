@@ -122,6 +122,10 @@ if ( !function_exists( 'pvt_get_price_html' ) ){
  * Updated it in version 1.4.15
  * Updated it in version 1.5.0
  * Updated it in version 1.5.5 [Removed ob_start & ob_get_clean]
+ * Updated it in version 1.8.0 
+ *     -[Added `remove_oos_qty_field` condition
+ *     and `do_action` hook] and return immediately if remove_oos_qty_field is true
+ *     - Added pvt-disabled-qty class
  * =============================================================================
  */
 
@@ -129,9 +133,24 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
 
     function pvt_display_qty_field( $args ){
 
+        // A class to disable quantity field for unavailable variation quantity field
+        $disable_qty_field = $args['availability'] === 'no' ? 'pvt-disabled-qty' : '';
+
+        // To display `out of stock message` if `Remove Quantity Field` option enabled
+        if( 
+            is_array( $args ) && 
+            isset( $args['remove_oos_qty_field'] ) && 
+            $args['remove_oos_qty_field'] === true 
+        ){
+
+            do_action( 'pvtfw_oos_msg_instead_qty_field', $args );
+
+            return;
+        }
+
         if( is_array( $args ) && $args['layout'] === 'plus/minus' ){
 
-            echo '<div class="pvt-qty-input">';
+            echo wp_kses_post("<div class='pvt-qty-input {$disable_qty_field}'>");
                 echo '<button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>';
 
                 /**
@@ -157,7 +176,7 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
         }
         if( is_array( $args ) && $args['layout'] === 'basic' ){
 
-            echo '<div class="pvtfw-quantity">';
+            echo wp_kses_post("<div class='pvtfw-quantity {$disable_qty_field}'>");
                 /**
                  * =============================================================================
                  * woocommerce_quantity_input($args) removed added pvtfw_basic_input hook
@@ -224,6 +243,7 @@ if( !function_exists( 'pvt_plus_minus_qty_input_markup' ) ){
                     size="4"
                     min="%9$s"
                     max="%10$s"
+                    data-parent_product_id="%12$s"
                     %11$s
                 />
             </div>',
@@ -247,7 +267,8 @@ if( !function_exists( 'pvt_plus_minus_qty_input_markup' ) ){
                 esc_attr( $args['placeholder'] ),
                 esc_attr( $args['inputmode'] ),
                 esc_attr( isset( $args['autocomplete'] ) ? $args['autocomplete'] : 'on' )
-            ) : ''
+            ) : '',
+           esc_attr( wp_get_post_parent_id( $args['input_id'] ) )
         )."<input type='hidden' name='hidden_price' class='hidden_price' value='".esc_attr( $args['price'] )."'> <input type='hidden' name='pvt_variation_availability' value='".esc_attr( $args['availability'] )."'>"; // Additional hidden field to control the price and availability
     }
 
@@ -290,6 +311,7 @@ if( !function_exists( 'pvt_basic_qty_input_markup' ) ){
                     size="4"
                     min="%9$s"
                     max="%10$s"
+                    data-parent_product_id="%12$s"
                     %11$s
                 />',
            esc_attr($type),
@@ -312,7 +334,8 @@ if( !function_exists( 'pvt_basic_qty_input_markup' ) ){
                 esc_attr( $args['placeholder'] ),
                 esc_attr( $args['inputmode'] ),
                 esc_attr( isset( $args['autocomplete'] ) ? $args['autocomplete'] : 'on' )
-            ) : ''
+            ) : '',
+           esc_attr( wp_get_post_parent_id( $args['input_id'] ) )
         )."<input type='hidden' name='hidden_price' class='hidden_price' value='".esc_attr( $args['price'] )."'> <input type='hidden' name='pvt_variation_availability' value='".esc_attr( $args['availability'] )."'>"; // Additional hidden field to control the price and availability
     }
 

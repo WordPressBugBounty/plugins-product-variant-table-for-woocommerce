@@ -104,7 +104,8 @@ label.wpx-number-group span {
 
 
 /*New Tag CSS*/
-.wpx-table tr.new{
+.wpx-table tr.new,
+.wpx-table tr.beta{
   position: relative;
 }
 
@@ -122,4 +123,51 @@ label.wpx-number-group span {
   bottom: 0;
   right: 0;
   font-size: 9px;
+}
+
+.wpx-table tr.beta:after {
+  content: attr(data-new-tag);
+  position: absolute;
+  background: #b78755;
+  color: white;
+  padding: 0 3px;
+  line-height: 2;
+  bottom: 0;
+  right: 0;
+  font-size: 9px;
+}
+
+/* Badge CSS for Version number */
+.wpx-version-title {
+    background-color: #c3c4c7;
+    padding: 5px 10px;
+    color: #ffffff;
+    border-radius: 50px;
+    font-size: 12px;
+}
+
+/* Radio Input Style */
+
+.wpx-table fieldset .radio-item{
+  padding: 5px 0;
+}
+
+.wpx-table fieldset .radio-item label{
+  cursor: pointer;
+}
+
+.wpx-table input[type=radio]{
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.wpx-table input[type=radio]:focus{
+  border-color: #8016f9;
+  box-shadow: 0 0 0 1px #8014f9;
+}
+
+.wpx-table input[type=radio]:checked::before{
+  width: 1rem;
+  height: 1rem;
+  background-color: #8014f9;
 }

@@ -36,6 +36,10 @@
     table-layout: auto;
 }
 
+.pvtfw_variant_table_block table.variant tr{
+    position: relative;
+}
+
 .pvtfw_variant_table_block table.variant,
 .pvtfw_variant_table_block table.variant thead th,
 .pvtfw_variant_table_block table.variant tbody td,
@@ -301,6 +305,9 @@
  * }
  */
 
+.pvt-disabled-qty{
+    pointer-events: none;
+}
 
 .pvt-qty-input {
   border-radius: 4px;

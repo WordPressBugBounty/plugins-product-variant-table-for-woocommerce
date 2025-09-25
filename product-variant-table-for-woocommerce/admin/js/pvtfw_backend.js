@@ -14,10 +14,19 @@
     $('.nav-tab-wrapper a').on('click', function(e){
 
         e.preventDefault();
-        var target = $(this).data('target');
+
+        $link = $(this);
+
+        lock_option( $link );
+
+    });
+
+    function lock_option( $link ){
+
+      var target = $link.data('target');
 
         $('.nav-tab').removeClass('nav-tab-active');
-        $(this).addClass('nav-tab-active');
+        $link.addClass('nav-tab-active');
 
         $('div.form-section').hide();
         $('div.form-section#'+target).show();
@@ -29,7 +38,7 @@
         $('div.form-section input[name=pvtfw_variant_table_tab]').val(target);
 
         // Checking if the nav a has a class "lock"
-        if( $(this).hasClass('lock') ){
+        if( $link.hasClass('lock') ){
           // If has a lock class, hide the submit <p> block using the target
           $('p.submit[data-taget="'+target+'"]').hide();
         }
@@ -37,7 +46,7 @@
           $('p.submit[data-taget ="'+target+'"]').show();
         }
 
-    });
+    }
 
     // Sortable table header
 

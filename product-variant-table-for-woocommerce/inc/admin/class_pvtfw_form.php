@@ -60,7 +60,6 @@ if( !class_exists('PVTFW_FORM' )):
                                 <option value="plus/minus"
                                     <?php echo $qty_layout == 'plus/minus' ? "selected" : ''; ?>>+/- Input</option>
                             </select>
-                            <span class="red-remark"><?php echo esc_html__("Note: Many themes remove default WooCommerce hooks. So, +/- input may not work on your theme.", "product-variant-table-for-woocommerce"); ?></span>
                         </td>
                     </tr>
 

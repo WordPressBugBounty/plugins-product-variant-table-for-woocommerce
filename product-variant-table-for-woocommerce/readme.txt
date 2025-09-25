@@ -4,7 +4,7 @@ Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
 Tested up to: 6.8
 Requires PHP: 5.6.20
-Stable tag: 1.7.4
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,7 @@ With the extended version of this plugin, you can take your product variation ta
 🎨 Have a long list of variations! Apply vertical scrolling for a better user experience.
 🎨 Display Ajax Variation Table Popup using `Display Rule`
 🎨 Customize the Variation Table design (Header, Table Body, and Footer) as you want.
+🎨 In addition to Bulk Cart, PVT offers Quick Cart. Items are updated (added/removed) to the cart only by updating (increasing/decreasing) the quantity field.
 
 
 Currently, it has support for the following plugins:
@@ -87,6 +88,7 @@ Currently, it has support for the following plugins:
 == Our Popular Addons for WooCommerce ==
 
 👉 [Variation Price Display Range for WooCommerce](https://wordpress.org/plugins/variation-price-display/)
+👉 [VariationX - Variations as Radio Buttons for WooCommerce](https://wordpress.org/plugins/variations-as-radio-buttons/)
 👉 [Fast Cart for WooCommerce](https://wordpress.org/plugins/fast-cart/)
 👉 [Social Share for WooCommerce](https://wordpress.org/plugins/product-share/)
 
@@ -178,11 +180,11 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.7.4 [13-08-2025] Wednesday =
-* Update: Script (to return the first quantity value after successful carted).
-* Remove: `load_plugin_textdomain()` as it has been discouraged since WordPress version 4.6. When a plugin is hosted on WordPress.org, it is not necessary to manually include this function call for translations under the plugin slug. WordPress will automatically load the translations when needed.
-* Fix: Style (to display table header in correct place).
-* Compatibility: WooCommerce 10.1.0.
+= 1.8.0 [25-09-2025] Thursday =
+* Update: Script.
+* Update: Settings fields.
+* Add: Hook `pvtfw_oos_msg_instead_qty_field`.
+* Compatibility: WooCommerce 10.2.1.
 
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)
@@ -190,9 +192,8 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Upgrade Notice ==
 
-= 1.7.0 [23-02-2025] Sunday =
-* Update: Settings framework.
-* Update:`$options` array.
-* Update: Availability text condition and optimize the code at compatiblilty.php.
-* Update: Scripts and added necessary trigger.
-* Check: WPCS.
+= 1.8.0 [24-09-2025] Wednesday =
+* Update: Script.
+* Update: Settings fields.
+* Add: Hook `pvtfw_oos_msg_instead_qty_field`.
+* Compatibility: WooCommerce 10.2.1.

@@ -7,11 +7,11 @@ Author: WPXtension
 Author URI: https://wpxtension.com/
 Text Domain: product-variant-table-for-woocommerce
 Domain Path: /languages
-Version: 1.7.4
+Version: 1.8.0
 Requires at least: 4.7.0
 Requires PHP: 5.6.20
 WC requires at least: 3.0.0
-WC tested up to: 10.1.0
+WC tested up to: 10.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -32,8 +32,8 @@ if (!defined('ABSPATH')) {
  * ====================================================
  */
 
-define("PVTFW_VARIANT_TABLE_VERSION", '1.7.4');
-define("PVTFW_REQUIRED_PRO_VERSION", '1.7.0');
+define("PVTFW_VARIANT_TABLE_VERSION", '1.8.0');
+define("PVTFW_REQUIRED_PRO_VERSION", '1.8.0');
 define("PVTFW_DIR", plugin_dir_path(__FILE__) );
 define("PVTFW_FILE", plugin_basename(__FILE__));
 
@@ -121,6 +121,7 @@ if( !class_exists('PVTFW_TABLE' )):
 			require_once PVTFW_DIR.'inc/admin/class_pvtfw_settings.php';
 			require_once PVTFW_DIR.'inc/admin/class_pvtfw_advance.php';
 			require_once PVTFW_DIR.'inc/admin/class_pvtfw_styling.php';
+			require_once PVTFW_DIR.'inc/admin/class_pvtfw_bulk_cart.php';
 
 			require_once PVTFW_DIR.'inc/frontend/class_pvtfw_print_table.php';
 			require_once PVTFW_DIR.'inc/frontend/class_pvtfw_available_btn.php';
@@ -270,20 +271,23 @@ if( !class_exists('PVTFW_TABLE' )):
 	     * @return     array  $santized_options  The sanitized input.
 		 *====================================================
 	     */
-	    public function sanitize_array( $options ) : array{
+	    public function sanitize_array( $options ) : array {
+		    // Ensure $options is an array
+		    if ( ! is_array( $options ) ) {
+		        $options = array();
+		    }
 
-	        // Initialize the new array that will hold the sanitize values
-	        $santized_options = array();
+		    // Initialize the new array that will hold the sanitized values
+		    $sanitized_options = array();
 
-	        // Loop through the options and sanitize each of the values
-	        foreach ( $options as $key => $value ) {
-	            $santized_options[ $key ] = ( isset( $options[ $key ] ) ) ?
-	            sanitize_text_field( $value ) :
-	            '';
-	        }
+		    // Loop through the options and sanitize each of the values
+		    foreach ( $options as $key => $value ) {
+		        $sanitized_options[ $key ] = sanitize_text_field( $value );
+		    }
 
-	        return $santized_options;
-	    }
+		    return $sanitized_options;
+		}
+
 		 
 
 

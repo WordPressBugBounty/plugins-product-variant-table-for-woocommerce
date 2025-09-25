@@ -202,7 +202,7 @@ if( !class_exists('PVTFW_STYLING' )):
 
         	$lock_class = !PVTFW_TABLE::is_pvtfw_pro_Active() ? esc_attr( 'lock' ) : '';
 
-            $tab .= "<a href='#styling' data-target='styling' class='nav-tab ".($curTab==='styling' ? 'nav-tab-active' : null).$lock_class."'>".PVTFW_COMMON::badge('Pro', 'return').__('Styling', 'product-variant-table-for-woocommerce')."</a>";
+            $tab .= "<a href='#styling' data-target='styling' class='nav-tab ".($curTab==='styling' ? 'nav-tab-active ' : null).$lock_class."'>".PVTFW_COMMON::badge('Pro', 'return').__('Styling', 'product-variant-table-for-woocommerce')."</a>";
             
             return $tab;
 

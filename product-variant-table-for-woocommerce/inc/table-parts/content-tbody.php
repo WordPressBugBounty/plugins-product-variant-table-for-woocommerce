@@ -355,7 +355,7 @@
 								// woocommerce_quantity_input($value);
 							}
 							else{
-								// To display `out of stock message` if `Remove Quantity Field` option enabled
+								// If anything found except array, pass it through `wp_kses_post`
 								echo wp_kses_post( $value );
 							}
 						echo "</td>";
