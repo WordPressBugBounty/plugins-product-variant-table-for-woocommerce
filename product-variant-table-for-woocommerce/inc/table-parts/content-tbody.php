@@ -45,7 +45,7 @@
 				$single_variation = new WC_Product_Variation($value);
 
 				// Not collect some variation data
-				if( apply_filters( 'pvt_skip_some_variation', false, $single_variation ) ){
+				if( apply_filters( 'pvtfw_skip_some_variation', false, $single_variation ) ){
 					continue;
 				}
 
@@ -63,7 +63,6 @@
 					$options['dimensions_html'][] = apply_filters('pvtfw_table_dimensions_html', wc_format_dimensions($single_variation->get_dimensions(false)), $single_variation);
 					$options['weight_html'][] = apply_filters('pvtfw_table_weight_html', wc_format_weight($single_variation->get_weight(false)), $single_variation);
 					$options['availability_html'][] = apply_filters('pvtfw_table_availability_html', wc_get_stock_html( $single_variation ), $single_variation);
-;
 
 					// Applying filter for price
 
@@ -80,6 +79,10 @@
 						'input_id'     => uniqid( 'quantity_' ),
 						'input_name'   => 'quantity',
 						'input_value'  => '1',
+						/**
+		                 * (Ignore these hooks. It is a standard WooCommerce hooks.)
+		                 * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		                 */
 						'classes'      => apply_filters( 'woocommerce_quantity_input_classes', array( 'input-text', 'qty', 'text' ), $single_variation ),
 						'max_value'    => apply_filters( 'woocommerce_quantity_input_max', -1, $single_variation ),
 						'min_value'    => apply_filters( 'woocommerce_quantity_input_min', 0, $single_variation ),
@@ -106,14 +109,16 @@
 
 					/**
 					 *
-					 * @note: woocommerce_quantity_input_args changed to pvt_woocommerce_quantity_input_args
+					 * @note: woocommerce_quantity_input_args changed to pvtfw_woocommerce_quantity_input_args
 					 * 
 					 * $options['quantity'] called outside of the condition and replaced with $options_qty_layout
 					 * 
 					 * @since version 1.4.13 
 					 * 
+					 * @updated in version 1.9.0
+					 * 
 					 **/
-					$options['quantity'][] = apply_filters( 'pvt_woocommerce_quantity_input_args', $options_qty_layout, $qty_layout, $single_variation );
+					$options['quantity'][] = apply_filters( 'pvtfw_woocommerce_quantity_input_args', $options_qty_layout, $qty_layout, $single_variation );
 					/**
 					 *
 					 * @note: Passed data as array to work with them later
@@ -121,12 +126,15 @@
 					 * 
 					 * @since version 1.6.0
 					 * 
+					 * @updated in 1.9.0
+					 * 
 					 **/
 					$options['action'][] = array(
 						'product_id'        => $product_id, 
 						'cart_url'          => $cart_url, 
 						'product_url'       => $product_url, 
 						'variant_id'        => $variant_id, 
+						'product_name'		=> $single_variation ? $single_variation->get_name() : '',
 						'stock_status'      => $single_variation->get_stock_status(),
 						'text'              => $text,
 						'availability_html' => wc_get_stock_html( $single_variation ),
@@ -313,11 +321,11 @@
 							$term = get_term_by( 'slug', $val, wc_sanitize_taxonomy_name( stripslashes($key3) ) );
 							// If term is not empty then print attribute label else product page inputted vairation name
 							if(!empty($term)){
-								echo wp_kses_post( apply_filters( "pvt_global_attribute_terms", "<td data-title='{$taxonomy_name}'>{$term->name}</td>", $term, $taxonomy_name ) );
+								echo wp_kses_post( apply_filters( "pvtfw_global_attribute_terms", "<td data-title='{$taxonomy_name}'>{$term->name}</td>", $term, $taxonomy_name ) );
 								// Structure of id is {column title}-{product id}-{generated id}-{another generated id}
 							}
 							else{
-								echo wp_kses_post( apply_filters( "pvt_custom_attribute_terms", "<td data-title='{$taxonomy_name}'>{$val}</td>", $val, $taxonomy_name ) );
+								echo wp_kses_post( apply_filters( "pvtfw_custom_attribute_terms", "<td data-title='{$taxonomy_name}'>{$val}</td>", $val, $taxonomy_name ) );
 								// Structure of id is {column title}-{product id}-{generated id}-{another generated id}
 							}
 							
@@ -338,7 +346,9 @@
 								 * 
 								 * Function name: `pvt_display_qty_field`
 								 * 
-								 * New Hook name: `pvt_print_qty_field`
+								 * 1.6.0 - Hook name: `pvt_print_qty_field`
+								 * 
+								 * New Hook name: `pvtfw_print_qty_field`
 								 *	
 								 * @since 1.4.14
 								 * 
@@ -346,11 +356,13 @@
 								 * 
 								 * @modified in 1.6.0
 								 * 
+								 * @modified in 1.9.0
+								 * 
 								 */ 
 
 								// print_r($value);
 
-								apply_filters( 'pvt_print_qty_field', $value );
+								apply_filters( 'pvtfw_print_qty_field', $value );
 
 								// woocommerce_quantity_input($value);
 							}
@@ -375,14 +387,16 @@
 								 * 
 								 * Hooked Function: `pvt_display_cart_button`
 								 * 
-								 * Hook name: `pvt_print_cart_btn`
+								 * 1.6.0 - Hook name: `pvt_print_cart_btn`
+								 * 
+								 * Hook name: `pvtfw_print_cart_btn`
 								 *	
 								 * @since 1.6.0
 								 * 
-								 * 
+								 * @modified 1.9.0
 								 */ 
 
-								apply_filters( 'pvt_print_cart_btn', $value );
+								apply_filters( 'pvtfw_print_cart_btn', $value );
 
 								// woocommerce_quantity_input($value);
 							}

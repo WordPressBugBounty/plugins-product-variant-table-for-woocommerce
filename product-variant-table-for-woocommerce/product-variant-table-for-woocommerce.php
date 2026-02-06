@@ -7,11 +7,11 @@ Author: WPXtension
 Author URI: https://wpxtension.com/
 Text Domain: product-variant-table-for-woocommerce
 Domain Path: /languages
-Version: 1.8.0
+Version: 1.9.1
 Requires at least: 4.7.0
 Requires PHP: 5.6.20
 WC requires at least: 3.0.0
-WC tested up to: 10.2.1
+WC tested up to: 10.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -32,8 +32,8 @@ if (!defined('ABSPATH')) {
  * ====================================================
  */
 
-define("PVTFW_VARIANT_TABLE_VERSION", '1.8.0');
-define("PVTFW_REQUIRED_PRO_VERSION", '1.8.0');
+define("PVTFW_VARIANT_TABLE_VERSION", '1.9.1');
+define("PVTFW_REQUIRED_PRO_VERSION", '1.9.0');
 define("PVTFW_DIR", plugin_dir_path(__FILE__) );
 define("PVTFW_FILE", plugin_basename(__FILE__));
 
@@ -163,6 +163,9 @@ if( !class_exists('PVTFW_TABLE' )):
 
 			// Body Class
 			add_action( 'body_class', array( $this, 'pvt_body_class' ) );
+
+			// Translation function
+			add_action( 'init', array( $this,'dynamic_text_register_to_translate' ) );
 		}
 
 		/**
@@ -191,6 +194,8 @@ if( !class_exists('PVTFW_TABLE' )):
 			 * @revised in 1.4.20
 			 */
 			if ( 
+				// (Ignore this hook. It is a standard WordPress hook.)
+				// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) 
 			){
 				return true;
@@ -222,6 +227,8 @@ if( !class_exists('PVTFW_TABLE' )):
 			 * @revised in 1.4.20
 			 */
 			if ( 
+				// (Ignore this hook. It is a standard WordPress hook.)
+				// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				in_array( 'product-variant-table-for-woocommerce-pro/product-variant-table-for-woocommerce-pro.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) 
 			){
 				return true;
@@ -298,7 +305,7 @@ if( !class_exists('PVTFW_TABLE' )):
 		**/
 		public function remove_add_to_cart() {
 			// Default is `false` to apply table markup and feature
-            if( apply_filters( 'disable_pvt_to_apply', false ) || apply_filters( 'disable_pvt_to_remove_add_to_cart', false ) ){
+            if( apply_filters( 'pvtfw_disable_to_apply', false ) || apply_filters( 'pvtfw_disable_to_remove_add_to_cart', false ) ){
                 return;
             }
 			remove_action('woocommerce_variable_add_to_cart', 'woocommerce_variable_add_to_cart', 30);
@@ -442,6 +449,18 @@ if( !class_exists('PVTFW_TABLE' )):
 			 
 			return $plugin_meta;
 		}
+
+
+		/**
+		 * ================================================================
+		 * Registering the options for translation.
+		 * ================================================================
+		 * @since 1.9.0
+		 */
+		public function dynamic_text_register_to_translate(){
+        	PVTFW_COMMON::register_translatable_option( 'pvtfw_variant_table_available_options_btn_text', 'Available options' );
+        	PVTFW_COMMON::register_translatable_option( 'pvtfw_variant_table_cart_btn_text', 'Add to Cart' );
+        }
 
 	}
 

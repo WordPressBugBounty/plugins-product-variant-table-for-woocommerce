@@ -27,7 +27,7 @@ if( !class_exists('PVTFW_AVAILABE_BTN' )):
         function available_options_btn()
         {
             // Default is `false` to apply table markup and feature
-            if( apply_filters( 'disable_pvt_to_apply', false ) || apply_filters( 'disable_pvt_to_show_available_option', false ) ){
+            if( apply_filters( 'pvtfw_disable_to_apply', false ) || apply_filters( 'pvtfw_disable_to_show_available_option', false ) ){
                 return;
             }
 
@@ -36,15 +36,29 @@ if( !class_exists('PVTFW_AVAILABE_BTN' )):
                 return;
             }
 
-            // Get Available variations?
+            /** 
+             * Get Available variations?
+             * (Ignore this hook. It is a standard WooCommerce hook.)
+             * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+             */
             $get_variations = count( $product->get_children() ) <= apply_filters( 'woocommerce_ajax_variation_threshold', 30, $product );
 
             $available_variations = $get_variations ? $product->get_available_variations() : false;
 
-            // Don't do anything if variable product has an issue with setup like- price is missing
-            // Just display a message as WooCommerce does.
+            /**
+             * Don't do anything if variable product has an issue with setup like- price is missing
+             * Just display a message as WooCommerce does.
+             */
             if ( empty( $available_variations ) && false !== $available_variations ){ ?>
-                <p class="stock out-of-stock"><?php echo esc_html( apply_filters( 'woocommerce_out_of_stock_message', __( 'This product is currently out of stock and unavailable.', 'product-variant-table-for-woocommerce' ) ) ); ?></p>
+                <p class="stock out-of-stock">
+                    <?php 
+                    /**
+                     * (Ignore this hook. It is a standard WooCommerce hook.)
+                     * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+                     */
+                    echo esc_html( apply_filters( 'woocommerce_out_of_stock_message', __( 'This product is currently out of stock and unavailable.', 'product-variant-table-for-woocommerce' ) ) ); 
+                    ?>
+                </p>
                 <?php
                 return;
             }

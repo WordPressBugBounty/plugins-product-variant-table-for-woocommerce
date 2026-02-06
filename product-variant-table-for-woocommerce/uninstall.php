@@ -5,7 +5,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
     die;
 }
 
-$options_array = array(
+$pvtfw_options_array = array(
     'pvtfw_variant_table_place',
     'pvtfw_variant_table_columns',
     'pvtfw_variant_table_show_available_options_btn',
@@ -22,7 +22,7 @@ $options_array = array(
     'pvtfw_variant_table_tab',
 );
 
-foreach ($options_array as $key => $option) {
-	delete_option($option);
+foreach ($pvtfw_options_array as $pvtfw_key => $pvtfw_option) {
+	delete_option($pvtfw_option);
 }
  

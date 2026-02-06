@@ -55,6 +55,11 @@ if( !class_exists('PVTFW_COMMON' )):
 		 * ====================================================
 		 * Get Setings as an object
 		 * ====================================================
+         * 
+         * @updated in 1.9.0
+         * 
+         * Changed the values of-> `available_title_text`, `cart_btn_text`
+         * 
 		 */
 		public static function pvtfw_get_options(){
 
@@ -63,10 +68,10 @@ if( !class_exists('PVTFW_COMMON' )):
 				'table_place' 		=> get_option('pvtfw_variant_table_place', 'woocommerce_after_single_product_summary_9'),
         		'showTableHeader' 	=> get_option('pvtfw_variant_table_show_table_header', 'on'),
 				'showAvailableOptionBtn' => get_option('pvtfw_variant_table_show_available_options_btn', 'on'),
-				'available_btn_text' =>  get_option('pvtfw_variant_table_available_options_btn_text'),
+				'available_btn_text' =>  self::get_translated_option( 'pvtfw_variant_table_available_options_btn_text', 'Available options' ),
                 'available_title_text' =>  get_option('pvtfw_variant_table_show_available_options_text', 'on'),
 				// previously was btn_text now cart_btn_text
-				'cart_btn_text' 	=>  get_option('pvtfw_variant_table_cart_btn_text'),
+				'cart_btn_text' 	=>  self::get_translated_option( 'pvtfw_variant_table_cart_btn_text', 'Add To Cart' ),
 				'qty_layout' 		=> get_option('pvtfw_variant_table_qty_layout', 'plus/minus'),
         		'showSubTotal'		=> get_option('pvtfw_variant_table_sub_total', ''),
                 'scrollToTop'       => get_option('pvtfw_variant_table_scroll_to_top', 'on'),
@@ -77,7 +82,7 @@ if( !class_exists('PVTFW_COMMON' )):
         		'curTab' 			=> get_option('pvtfw_variant_table_tab', '')
 			);
 
-			$pvt_option = apply_filters('all_pvt_options', $options);
+			$pvt_option = apply_filters('pvtfw_all_options', $options);
 
 			return (object)$pvt_option;
 
@@ -220,7 +225,7 @@ if( !class_exists('PVTFW_COMMON' )):
          * @return     array  Allowed tags
          */
         public static function allowed_tags(){
-            return apply_filters( 'pvt_allowed_tags', array(
+            return apply_filters( 'pvtfw_allowed_tags', array(
                 'input' => array(
                     'class' => array(),
                     'type' => array(),
@@ -233,8 +238,61 @@ if( !class_exists('PVTFW_COMMON' )):
                 'div' => array(),
             ) );
         }
+
+        /**
+         * ================================================================
+         * Register an option as a translatable string for WPML & Polylang.
+         * ================================================================
+         * @since 1.9.0
+         */
+        public static function register_translatable_option( $option_name, $default = '', $domain = 'product-variant-table-for-woocommerce' ) {
+            $value = get_option( $option_name, $default );
+
+            // WPML
+            if ( function_exists( 'icl_register_string' ) ) {
+                icl_register_string( $domain, $option_name, $value );
+            }
+
+            // Polylang
+            if ( function_exists( 'pll_register_string' ) ) {
+                pll_register_string( $option_name, $value, $domain );
+            }
+        }
         
-        
+        /**
+         * ================================================================
+         * Get a translated option value using WPML or Polylang.
+         * ================================================================
+         * 
+         * @since 1.9.0
+         * 
+         * @return Text/Translate Text
+         */
+        public static function get_translated_option( $option_name, $default = '', $domain = 'product-variant-table-for-woocommerce' ) {
+            $value = get_option( $option_name, $default );
+
+            // WPML
+            if ( function_exists( 'wpml_translate_single_string' ) ) {
+                /**
+                 * (Ignore this hook. It is a standard WPML hook.)
+                 * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+                 */
+                return apply_filters(
+                    'wpml_translate_single_string',
+                    $value,
+                    $domain,
+                    $option_name
+                );
+            }
+
+            // Polylang
+            if ( function_exists( 'pll__' ) ) {
+                return pll__( $value );
+            }
+
+            return $value; // fallback
+        }
+
 
     }
 

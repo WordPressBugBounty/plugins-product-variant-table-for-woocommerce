@@ -7,11 +7,11 @@
  * ==============================================
  */
 if ( class_exists('ReyCore') && PVTFW_COMMON::pvtfw_get_options()->cart_redirect == '' ):
-    if( !function_exists('reycore_support') ):
-        function reycore_support(){
+    if( !function_exists('pvtfw_reycore_support') ):
+        function pvtfw_reycore_support(){
             return false;
         }
-        add_filter( 'pvtfw_added_cart_filter', 'reycore_support' );
+        add_filter( 'pvtfw_added_cart_filter', 'pvtfw_reycore_support' );
     endif;
 endif;
 
@@ -54,11 +54,11 @@ endif;
  */
 
 
-if ( !function_exists( 'pvt_whols_plugin_support' ) && PVTFW_COMMON::check_plugin_state('whols') ){
+if ( !function_exists( 'pvtfw_whols_plugin_support' ) && PVTFW_COMMON::check_plugin_state('whols') ){
 
     
 
-    function pvt_whols_plugin_support( $price_html, $single_variation ){
+    function pvtfw_whols_plugin_support( $price_html, $single_variation ){
 
         $whols_plugin_options = (array) get_option( 'whols_options' );
 
@@ -85,7 +85,7 @@ if ( !function_exists( 'pvt_whols_plugin_support' ) && PVTFW_COMMON::check_plugi
         return $whols_price;
 
     }
-    add_filter( 'pvtfw_price_html', 'pvt_whols_plugin_support', 20, 2 );
+    add_filter( 'pvtfw_price_html', 'pvtfw_whols_plugin_support', 20, 2 );
 
 }
 
@@ -97,9 +97,9 @@ if ( !function_exists( 'pvt_whols_plugin_support' ) && PVTFW_COMMON::check_plugi
  */
 
 
-if ( !function_exists( 'pvt_get_price_html' ) ){
+if ( !function_exists( 'pvtfw_get_price_html' ) ){
 
-    function pvt_get_price_html( $price_html, $single_variation ){
+    function pvtfw_get_price_html( $price_html, $single_variation ){
 
         /**
          * =============================================================================
@@ -111,7 +111,7 @@ if ( !function_exists( 'pvt_get_price_html' ) ){
         return $single_variation->get_price_html();
 
     }
-    add_filter( 'pvtfw_price_html', 'pvt_get_price_html', 10, 2 );
+    add_filter( 'pvtfw_price_html', 'pvtfw_get_price_html', 10, 2 );
 
 }
 
@@ -129,12 +129,16 @@ if ( !function_exists( 'pvt_get_price_html' ) ){
  * =============================================================================
  */
 
-if( !function_exists( 'pvt_display_qty_field' ) ){
+if( !function_exists( 'pvtfw_display_qty_field' ) ){
 
-    function pvt_display_qty_field( $args ){
+    function pvtfw_display_qty_field( $args ){
 
         // A class to disable quantity field for unavailable variation quantity field
-        $disable_qty_field = $args['availability'] === 'no' ? 'pvt-disabled-qty' : '';
+        $disable_qty_field = ( is_array( $args ) && 
+                            isset( $args['availability'] ) &&
+                            $args['availability'] === 'no' ) ? 
+                            'pvt-disabled-qty' : 
+                            '';
 
         // To display `out of stock message` if `Remove Quantity Field` option enabled
         if( 
@@ -171,7 +175,7 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
              * =============================================================================
              */
 
-            do_action( 'pvt_after_quantity_field_markup', $args );
+            do_action( 'pvtfw_after_quantity_field_markup', $args );
 
         }
         if( is_array( $args ) && $args['layout'] === 'basic' ){
@@ -193,13 +197,13 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
              * =============================================================================
              */
 
-            do_action( 'pvt_after_quantity_field_markup', $args );
+            do_action( 'pvtfw_after_quantity_field_markup', $args );
 
         }
 
     }
 
-    add_filter( 'pvt_print_qty_field', 'pvt_display_qty_field', 10, 1 );
+    add_filter( 'pvtfw_print_qty_field', 'pvtfw_display_qty_field', 10, 1 );
 
 }
 
@@ -212,9 +216,9 @@ if( !function_exists( 'pvt_display_qty_field' ) ){
  * =============================================================================
  */
 
-if( !function_exists( 'pvt_plus_minus_qty_input_markup' ) ){
+if( !function_exists( 'pvtfw_plus_minus_qty_input_markup' ) ){
 
-    function pvt_plus_minus_qty_input_markup( $args ){ 
+    function pvtfw_plus_minus_qty_input_markup( $args ){ 
 
         // print_r($args);
 
@@ -272,7 +276,7 @@ if( !function_exists( 'pvt_plus_minus_qty_input_markup' ) ){
         )."<input type='hidden' name='hidden_price' class='hidden_price' value='".esc_attr( $args['price'] )."'> <input type='hidden' name='pvt_variation_availability' value='".esc_attr( $args['availability'] )."'>"; // Additional hidden field to control the price and availability
     }
 
-    add_action( 'pvtfw_plus_minus_qty_input', 'pvt_plus_minus_qty_input_markup', 10, 1 );
+    add_action( 'pvtfw_plus_minus_qty_input', 'pvtfw_plus_minus_qty_input_markup', 10, 1 );
 
 }
 
@@ -284,9 +288,9 @@ if( !function_exists( 'pvt_plus_minus_qty_input_markup' ) ){
  * =============================================================================
  */
 
-if( !function_exists( 'pvt_basic_qty_input_markup' ) ){
+if( !function_exists( 'pvtfw_basic_qty_input_markup' ) ){
 
-    function pvt_basic_qty_input_markup( $args ){
+    function pvtfw_basic_qty_input_markup( $args ){
 
         /* translators: %s is replaced with the product name or quantity text */
         $label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'product-variant-table-for-woocommerce' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'product-variant-table-for-woocommerce' );
@@ -339,7 +343,7 @@ if( !function_exists( 'pvt_basic_qty_input_markup' ) ){
         )."<input type='hidden' name='hidden_price' class='hidden_price' value='".esc_attr( $args['price'] )."'> <input type='hidden' name='pvt_variation_availability' value='".esc_attr( $args['availability'] )."'>"; // Additional hidden field to control the price and availability
     }
 
-    add_action( 'pvtfw_basic_qty_input', 'pvt_basic_qty_input_markup', 10, 1 );
+    add_action( 'pvtfw_basic_qty_input', 'pvtfw_basic_qty_input_markup', 10, 1 );
 
 }
 
@@ -350,9 +354,9 @@ if( !function_exists( 'pvt_basic_qty_input_markup' ) ){
  * =============================================================================
  */
 
-if( !function_exists( 'pvt_push_in_stock_text' ) ){
+if( !function_exists( 'pvtfw_push_in_stock_text' ) ){
 
-    function pvt_push_in_stock_text( $availability, $product ){
+    function pvtfw_push_in_stock_text( $availability, $product ){
 
         if ( $product->is_in_stock() && $product->get_stock_quantity() === null && !$product->is_on_backorder( 1 ) ) {
 
@@ -364,7 +368,7 @@ if( !function_exists( 'pvt_push_in_stock_text' ) ){
 
     }
 
-    add_filter( 'woocommerce_get_availability_text', 'pvt_push_in_stock_text', 99, 2 );
+    add_filter( 'woocommerce_get_availability_text', 'pvtfw_push_in_stock_text', 99, 2 );
 
 }
 
@@ -376,13 +380,13 @@ if( !function_exists( 'pvt_push_in_stock_text' ) ){
  * =============================================================================
  */
 
-if( !function_exists( 'pvt_display_cart_button' ) ){
+if( !function_exists( 'pvtfw_display_cart_button' ) ){
 
-    function pvt_display_cart_button( $args ){
+    function pvtfw_display_cart_button( $args ){
 
         $stock_info = esc_html__('Out of Stock', 'product-variant-table-for-woocommerce');
 
-        $cart_button = pvt_cart_button_condition( $args, $stock_info ); //callback function
+        $cart_button = pvtfw_cart_button_condition( $args, $stock_info ); //callback function
 
         if( $args['stock_status'] === 'instock' || $args['stock_status'] === 'onbackorder' ){
             apply_filters( 'pvtfw_row_cart_btn_is', 
@@ -391,6 +395,7 @@ if( !function_exists( 'pvt_display_cart_button' ) ){
                 $args['cart_url'], 
                 $args['product_url'], 
                 $args['variant_id'], 
+                $args['product_name'], 
                 $args['text']
             );
         }
@@ -401,6 +406,7 @@ if( !function_exists( 'pvt_display_cart_button' ) ){
                 $args['cart_url'], 
                 $args['product_url'], 
                 $args['variant_id'], 
+                $args['product_name'], 
                 $stock_info
             );
         }
@@ -408,32 +414,28 @@ if( !function_exists( 'pvt_display_cart_button' ) ){
 
     }
 
-    add_filter( 'pvt_print_cart_btn', 'pvt_display_cart_button', 99, 1 );
+    add_filter( 'pvtfw_print_cart_btn', 'pvtfw_display_cart_button', 99, 1 );
 
 }
 
 /**
  * =============================================================================
- * Callback function for `pvt_display_cart_button`
+ * Callback function for `pvtfw_display_cart_button`
  * @since 1.5.5
  * @updated 1.6.4.1
  * @updated 1.7.0
  * =============================================================================
  */
-if( !function_exists( 'pvt_cart_button_condition' ) ){
+if( !function_exists( 'pvtfw_cart_button_condition' ) ){
 
-    function pvt_cart_button_condition( $args, $stock_info ){
+    function pvtfw_cart_button_condition( $args, $stock_info ){
 
         if( $args['stock_status'] === 'instock' || $args['stock_status'] === 'onbackorder' ){
             echo wp_kses_post( 
-                sprintf('<button data-product-id="%s" data-url="%s" data-product="%s" data-variant="%s" class="%s">
-                    <span class="pvtfw-btn-text">%s</span> 
-                    <div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
-                    </button>%s', 
-                    $args['product_id'], 
-                    $args['cart_url'], 
-                    $args['product_url'], 
-                    $args['variant_id'], 
+                sprintf('<button class="%1$s" data-product-id="%2$s" data-url="%3$s" data-product="%4$s" data-variant="%5$s" data-product-name="%6$s">
+                    <span class="pvtfw-btn-text">%7$s</span> 
+                    <span class="spinner-wrap"><span class="pvt-icon-spinner"></span></span>
+                    </button>%8$s',
                     /**
                      *
                      * Hook: pvtfw_add_to_cart_btn_classes
@@ -441,23 +443,39 @@ if( !function_exists( 'pvt_cart_button_condition' ) ){
                      * 
                      * @since version 1.4.16 
                      * 
+                     * @version 1.9.1
+                     * Reordered attributes in `<button>` tags so the class attribute appears before any `data-*` attributes.
+                     * 
                      **/
+                    // %1$s - Button Class
                     apply_filters( 'pvtfw_add_to_cart_btn_classes', 
                         wp_is_block_theme() ? 'wp-block-button__link wp-element-button wc-block-components-product-button__button pvtfw_variant_table_cart_btn' : 'pvtfw_variant_table_cart_btn button alt' 
                     ),
+                    // %2$s - Product ID
+                    $args['product_id'], 
+                    // %3$s - Button Cart URL
+                    $args['cart_url'], 
+                    // %4$s - Product URL
+                    $args['product_url'], 
+                    // %5$s - Variaiton ID
+                    $args['variant_id'], 
+                    // %6$s - Product Name
+                    $args['product_name'], 
+                    // %7$s - Button Text
                     apply_filters( 'pvtfw_cart_btn_text', 
                         
-                        /* 
+                        /** 
                          * @note: If it is coming from plugin settings it will not translate. Because, dynamic text
                          * is not translatable.
                          * 
                          * @recommendation: Contact through our support forum
                          * 
-                         * @link: https://localise.biz/wordpress/plugin/intro#content
+                         * @see https://localise.biz/wordpress/plugin/intro#content
                          */
                         $args['text']
 
                     ),
+                    // %8$s - Back Order Text after the Add to cart button
                     $args['stock_status'] === 'onbackorder' ? 
                     apply_filters('pvtfw_cart_btn_after_backorder_text',
                         $args['availability_html']
@@ -469,7 +487,7 @@ if( !function_exists( 'pvt_cart_button_condition' ) ){
             echo wp_kses_post( 
                 sprintf('<button class="%s" disabled>
                         <span class="pvtfw-btn-text">%s</span> 
-                        <div class="spinner-wrap"><span class="pvt-icon-spinner"></span></div>
+                        <span class="spinner-wrap"><span class="pvt-icon-spinner"></span></span>
                         </button>', 
                         /**
                          *

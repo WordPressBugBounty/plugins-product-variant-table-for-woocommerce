@@ -1,10 +1,11 @@
 === PVT - Product Variation Table for WooCommerce ===
 Contributors: wpxteam, hakik, rudolfl
+Donate link: https://wpxtension.com
 Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 5.6.20
-Stable tag: 1.8.0
+Stable tag: 1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,12 +160,12 @@ function PVT_custom(){
 add_action('pvtfw_variation_table_before', 'PVT_custom');
 ?>`
 
-= After updating PVT(1.4.14 or greater than 1.4.14) the quantity field (+/- button) style seems different, Can I use the theme provided design? =
+= After updating PVT(1.9.0 or greater than 1.9.0) the quantity field (+/- button) style seems different, Can I use the theme provided design? =
 
 You can add the following code inside your child theme's functions.php file. We recommend using a child theme rather than the main/parent theme.
 
-`remove_filter( 'pvt_print_qty_field', 'pvt_display_qty_field', 10, 1 );
-add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quantity_input($value); });`
+`remove_filter( 'pvtfw_print_qty_field', 'pvt_display_qty_field', 10, 1 );
+add_filter( 'pvtfw_print_qty_field', function( $value ){ return woocommerce_quantity_input($value); });`
 
 **Suggestion:** You can also add the snippet using a plugin called [Code Snippets](https://wordpress.org/plugins/code-snippets/)
 
@@ -180,11 +181,32 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Changelog ==
 
-= 1.8.0 [25-09-2025] Thursday =
-* Update: Script.
-* Update: Settings fields.
-* Add: Hook `pvtfw_oos_msg_instead_qty_field`.
-* Compatibility: WooCommerce 10.2.1.
+= 1.9.1 [21-12-2025] Sunday =
+* Updated: Reordered attributes in `<button>` tags so the class attribute appears before any `data-*` attributes.
+* Updated: Replaced `<div>` elements with `<span>` elements inside `<button>` tags.
+
+= 1.9.0 [14-12-2025] Sunday =
+* Added: WPML & Polylang Support.
+* Updated: $options array to add product name to the add-to-cart button.
+* Updated: Stylesheet to apply plugin settings for table footer.
+* Update: All hooks follow the Plugin Check Plugin (PCP) WPCS coding standards. If you’ve added custom code using PVT php hooks/functions, please replace the `pvt_` prefixes with `pvtfw_`.
+* Dev: Hooks Information- 
+	- **Previous:** `disable_pvt_to_apply` **Current:** `pvtfw_disable_to_apply`.
+	- **Previous:** `disable_pvt_table_markup_to_apply` **Current:** `pvtfw_disable_table_markup_to_apply`.
+	- **Previous:** `disable_pvt_shortcode_to_apply` **Current:** `pvtfw_disable_shortcode_to_apply`.
+	- **Previous:** `disable_pvt_to_show_available_option` **Current:** `pvtfw_disable_to_show_available_option`.
+	- **Previous:** `all_pvt_options` **Current:** `pvtfw_all_options`.
+	- **Previous:** `pvt_allowed_tags` **Current:** `pvtfw_allowed_tags`.
+	- **Previous:** `pvt_skip_some_variation` **Current:** `pvtfw_skip_some_variation`.
+	- **Previous:** `pvt_woocommerce_quantity_input_args` **Current:** `pvtfw_woocommerce_quantity_input_args`.
+	- **Previous:** `pvt_global_attribute_terms` **Current:** `pvtfw_global_attribute_terms`.
+	- **Previous:** `pvt_custom_attribute_terms` **Current:** `pvtfw_custom_attribute_terms`.
+	- **Previous:** `pvt_print_qty_field` **Current:** `pvtfw_print_qty_field`.
+	- **Previous:** `pvt_print_cart_btn` **Current:** `pvtfw_print_cart_btn`.
+	- **Previous:** `pvt_after_quantity_field_markup` **Current:** `pvtfw_after_quantity_field_markup`.
+	- **Previous:** `disable_pvt_to_remove_add_to_cart` **Current:** `pvtfw_disable_to_remove_add_to_cart`.
+	- **Note** The JavaScript events/triggers remain in their current state.
+* Compatibility: WordPress 6.9 & WooCommerce 10.4.2.
 
 
 [See changelog for all versions.](https://github.com/WPXtension/product-variation-table-for-woocommerce/blob/main/changelog-free.md)
@@ -192,8 +214,7 @@ add_filter( 'pvt_print_qty_field', function( $value ){ return woocommerce_quanti
 
 == Upgrade Notice ==
 
-= 1.8.0 [24-09-2025] Wednesday =
-* Update: Script.
-* Update: Settings fields.
-* Add: Hook `pvtfw_oos_msg_instead_qty_field`.
-* Compatibility: WooCommerce 10.2.1.
+= 1.9.0 [14-12-2025] Sunday =
+* Added: WPML & Polylang Support.
+* Update: All hooks follow the Plugin Check Plugin (PCP) WPCS coding standards. If you’ve added custom code using PVT php hooks/functions, please replace the `pvt_` prefixes with `pvtfw_`.
+* Dev: For hook references, check the changelog of 1.9.0.

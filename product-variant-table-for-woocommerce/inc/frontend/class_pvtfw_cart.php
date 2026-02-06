@@ -184,6 +184,10 @@ if( !class_exists('PVTFW_CART' ) ):
         
             if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id) && 'publish' === $product_status) { 
         
+                /** 
+                 * (Ignore this hook. It is a standard WooCommerce hook.)
+                 * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+                 */
                 do_action('woocommerce_ajax_added_to_cart', $product_id);
         
                 if ('yes' === get_option('pvtfw_woocommerce_cart_redirect_after_add')) { 
@@ -229,6 +233,10 @@ if( !class_exists('PVTFW_CART' ) ):
             $all_notices  = WC()->session->get( 'wc_notices', array() );
         
         
+            /** 
+             * (Ignore this hook. It is a standard WooCommerce hook.)
+             * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+             */
             $notice_types = apply_filters( 'woocommerce_notice_types', array( 'error', 'success', 'notice' ) );
 
             if($cartNotice == 'on'):

@@ -28,7 +28,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
         public function print_table(){
 
             // Default is `false` to apply table markup and feature
-            if( apply_filters( 'disable_pvt_to_apply', false ) || apply_filters( 'disable_pvt_table_markup_to_apply', false ) ){
+            if( apply_filters( 'pvtfw_disable_to_apply', false ) || apply_filters( 'pvtfw_disable_table_markup_to_apply', false ) ){
                 return;
             }
             // Print the prepared variation table
@@ -48,7 +48,12 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
 
             if( is_a( $product, 'WC_Product_Variable' ) ) {  
 
-                // Get Available variations?
+                /** 
+                 * Get Available variations?
+                 * 
+                 * (Ignore this hook. It is a standard WooCommerce hook.)
+                 * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+                 */ 
                 $get_variations = count( $product->get_children() ) <= apply_filters( 'woocommerce_ajax_variation_threshold', 30, $product );
 
                 $available_variations = $get_variations ? $product->get_available_variations() : false;
@@ -171,7 +176,7 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
         public function shortcode_print_table( $atts ){
 
             // Default is `false` to apply table markup and feature
-            if( apply_filters( 'disable_pvt_shortcode_to_apply', false ) ){
+            if( apply_filters( 'pvtfw_disable_shortcode_to_apply', false ) ){
                 return;
             }
 
@@ -183,7 +188,12 @@ if( !class_exists('PVTFW_PRINT_TABLE' )):
 
                 if ( is_a( $get_product, 'WC_Product_Variable' ) ) {
 
-                    // Get Available variations?
+                    /** 
+                     * Get Available variations?
+                     * 
+                     * (Ignore this hook. It is a standard WooCommerce hook.)
+                     * phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+                     */
                     $get_variations = count( $get_product->get_children() ) <= apply_filters( 'woocommerce_ajax_variation_threshold', 30, $get_product );
 
                     $available_variations = $get_variations ? $get_product->get_available_variations() : false;

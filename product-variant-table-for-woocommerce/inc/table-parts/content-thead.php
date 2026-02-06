@@ -43,9 +43,9 @@ if( !function_exists( 'pvtfw_process_table_header' ) ){
  * Getting Product Attribute Labels
  * ====================================================
  */
-if( !function_exists( 'get_attr_label' ) ){
+if( !function_exists( 'pvtfw_get_attr_label' ) ){
 
-    function get_attr_label( $atts ){
+    function pvtfw_get_attr_label( $atts ){
 
         $product = wc_get_product( absint( $atts["id"] ) );
 
@@ -74,7 +74,7 @@ if( !function_exists( 'pvtfw_print_table_header' ) ){
     function pvtfw_print_table_header( $atts ){
 
         $latest = pvtfw_process_table_header();
-        $attr_lbl = get_attr_label( $atts );
+        $attr_lbl = pvtfw_get_attr_label( $atts );
 
         /**
          * Hook: pvtfw_pro_thead_th.
