@@ -7,11 +7,11 @@ Author: WPXtension
 Author URI: https://wpxtension.com/
 Text Domain: product-variant-table-for-woocommerce
 Domain Path: /languages
-Version: 1.9.1
+Version: 1.9.2
 Requires at least: 4.7.0
 Requires PHP: 5.6.20
 WC requires at least: 3.0.0
-WC tested up to: 10.4.2
+WC tested up to: 10.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -32,8 +32,8 @@ if (!defined('ABSPATH')) {
  * ====================================================
  */
 
-define("PVTFW_VARIANT_TABLE_VERSION", '1.9.1');
-define("PVTFW_REQUIRED_PRO_VERSION", '1.9.0');
+define("PVTFW_VARIANT_TABLE_VERSION", '1.9.2');
+define("PVTFW_REQUIRED_PRO_VERSION", '1.9.2');
 define("PVTFW_DIR", plugin_dir_path(__FILE__) );
 define("PVTFW_FILE", plugin_basename(__FILE__));
 
@@ -358,7 +358,7 @@ if( !class_exists('PVTFW_TABLE' )):
 				$pre_installed = false;
 			}
 
-			if (is_product()) {
+			if (is_woocommerce()) {
 				wp_enqueue_script('pvtfw-frontend-scripts', plugins_url('public/js/pvtfw_frontend.js', __FILE__), array('woocommerce'), PVTFW_VARIANT_TABLE_VERSION, true);
 				wp_enqueue_style('pvtfw-frontend-style', plugins_url('public/css/pvtfw_frontend.css', __FILE__), array(), PVTFW_VARIANT_TABLE_VERSION);
 				wp_enqueue_style('fontello-style', plugins_url('public/font/fontello.css', __FILE__), array(), PVTFW_VARIANT_TABLE_VERSION);

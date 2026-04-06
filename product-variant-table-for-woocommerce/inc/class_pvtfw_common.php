@@ -1,5 +1,14 @@
 <?php 
 
+/**
+*====================================================
+* Exit if accessed directly
+*====================================================
+**/
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 if( !class_exists('PVTFW_COMMON' )):
 
     class PVTFW_COMMON {
@@ -117,14 +126,17 @@ if( !class_exists('PVTFW_COMMON' )):
 
             if ( "" == $text ){
                 $badge = __('New', 'product-variant-table-for-woocommerce');
+                $color = '#ff5722';
             }
             else{
                 $badge = $text;
+                $color = '#dcb006';
             }
 
             if ( "" == $return ){
                 echo sprintf('
-                    <span class="pvtfw-new-feature-tick">%s</span>',
+                    <span class="pvtfw-new-feature-tick" style="background:%s">%s</span>',
+                    esc_attr( $color ),
                     esc_html($badge)
                 );
             }

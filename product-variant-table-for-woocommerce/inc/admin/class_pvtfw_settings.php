@@ -1,5 +1,14 @@
 <?php
 
+/**
+*====================================================
+* Exit if accessed directly
+*====================================================
+**/
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 if( !class_exists('PVTFW_SETTINGS' )):
 
     class PVTFW_SETTINGS {

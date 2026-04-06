@@ -1,5 +1,14 @@
 <?php
 
+/**
+*====================================================
+* Exit if accessed directly
+*====================================================
+**/
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 if( !class_exists('PVTFW_BULK_CART' )):
 
 	class PVTFW_BULK_CART {
@@ -44,6 +53,24 @@ if( !class_exists('PVTFW_BULK_CART' )):
 	                            <label><input data-parent="pagination" type='checkbox' name='pvtfw_variant_table_variation_pagination' />
 	                                Quickly update the cart item by changing the quantity</label>
 	                            <span class="red-remark">Note: We don't recommend using `Quick Cart` and `Bulk Cart` together. This may confuse customers because updating the quantity field automatically adds or removes the item (variation) to/from the cart. Additionally, when enabled, the `Bulk Selection Layout` with checkbox will display an input value of `0`</span>
+	                        </td>
+	                    </tr>
+	                </table>
+	            </a>
+
+	            <h3>Archive Cart Settings</h3>
+	            <div class="detail">Display the variation table popup to purchase items from the archive/shop page.</div>
+
+	            <!-- Unlock Link -->
+	            <a href="https://wpxtension.com/product/product-variation-table-for-woocommerce/" target="_blank" style="font-weight: bold; color: #9e0303; margin-top: 7px; display: block;"><?php echo esc_attr__( 'Unlock all features >>>', 'product-variant-table-for-woocommerce' ); ?></a>
+
+	            <a href="https://wpxtension.com/product/product-variation-table-for-woocommerce/" target="_blank" style="text-decoration: none; color: #2c3338; opacity: 0.5;">
+	                <table class="form-table" style="pointer-events: none;">
+	                    <tr>
+	                        <th scope="row">Archive Cart <?php PVTFW_COMMON::badge('Beta'); ?></th>
+	                        <td>
+	                            <label><input data-parent="pagination" type='checkbox' name='pvtfw_variant_table_variation_pagination' />
+	                                Display a variation table popup, allowing customers to purchase items directly from the shop/archive page.</label>
 	                        </td>
 	                    </tr>
 	                </table>

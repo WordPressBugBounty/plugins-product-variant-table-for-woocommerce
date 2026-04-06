@@ -1,5 +1,14 @@
 <?php 
 
+/**
+*====================================================
+* Exit if accessed directly
+*====================================================
+**/
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 
 if( !function_exists( 'pvtfw_enable_scroll_option' ) ):
 

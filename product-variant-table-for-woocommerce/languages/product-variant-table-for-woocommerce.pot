@@ -1,15 +1,15 @@
-# Copyright (C) 2025 WPXtension
+# Copyright (C) 2026 WPXtension
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: PVT - Product Variation Table for WooCommerce 1.9.1\n"
+"Project-Id-Version: PVT - Product Variation Table for WooCommerce 1.9.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/product-variant-table-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: WPXtension <wpxtension@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-21T06:44:39+00:00\n"
+"POT-Creation-Date: 2026-04-06T09:05:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: product-variant-table-for-woocommerce\n"
@@ -39,294 +39,295 @@ msgstr ""
 msgid "https://wpxtension.com/"
 msgstr ""
 
-#: inc/admin/class_pvtfw_advance.php:40
-#: inc/admin/class_pvtfw_advance.php:116
-#: inc/admin/class_pvtfw_advance.php:172
-#: inc/admin/class_pvtfw_bulk_cart.php:37
-#: inc/admin/class_pvtfw_bulk_cart.php:56
-#: inc/admin/class_pvtfw_styling.php:37
-#: inc/admin/class_pvtfw_styling.php:70
-#: inc/admin/class_pvtfw_styling.php:115
-#: inc/admin/class_pvtfw_styling.php:160
+#: inc/admin/class_pvtfw_advance.php:49
+#: inc/admin/class_pvtfw_advance.php:125
+#: inc/admin/class_pvtfw_advance.php:181
+#: inc/admin/class_pvtfw_bulk_cart.php:46
+#: inc/admin/class_pvtfw_bulk_cart.php:65
+#: inc/admin/class_pvtfw_bulk_cart.php:83
+#: inc/admin/class_pvtfw_styling.php:46
+#: inc/admin/class_pvtfw_styling.php:79
+#: inc/admin/class_pvtfw_styling.php:124
+#: inc/admin/class_pvtfw_styling.php:169
 msgid "Unlock all features >>>"
 msgstr ""
 
-#: inc/admin/class_pvtfw_advance.php:98
+#: inc/admin/class_pvtfw_advance.php:107
 msgid "The width of Table Popup container. It will be applicable when you select the display rule as \"Table Popup\" from here or from the product edit page."
 msgstr ""
 
-#: inc/admin/class_pvtfw_advance.php:106
+#: inc/admin/class_pvtfw_advance.php:115
 msgid "The height of Table Popup container. It will be applicable when you select the display rule as \"Table Popup\" from here or from the product edit page."
 msgstr ""
 
-#: inc/admin/class_pvtfw_advance.php:222
+#: inc/admin/class_pvtfw_advance.php:231
 msgid "Advanced"
 msgstr ""
 
-#: inc/admin/class_pvtfw_bulk_cart.php:144
+#: inc/admin/class_pvtfw_bulk_cart.php:171
 msgid "Cart Options"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:47
+#: inc/admin/class_pvtfw_form.php:56
 msgid "Control different elements like notices & input layout"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:53
+#: inc/admin/class_pvtfw_form.php:62
 msgid "Quantity Field Layout"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:71
+#: inc/admin/class_pvtfw_form.php:80
 msgid "Scroll To Top"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:75
+#: inc/admin/class_pvtfw_form.php:84
 msgid "Take me to top of page after product successfully carted"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:80
+#: inc/admin/class_pvtfw_form.php:89
 msgid "Cart Confirmation Notice"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:84
+#: inc/admin/class_pvtfw_form.php:93
 msgid "Display notice after product successfully carted"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:89
+#: inc/admin/class_pvtfw_form.php:98
 msgid "Add Subtotal Column"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:93
+#: inc/admin/class_pvtfw_form.php:102
 msgid "Display Subtotal on changing quantity"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:106
+#: inc/admin/class_pvtfw_form.php:115
 msgid "Visual customizations of table header, width, scrollbar, etc."
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:110
+#: inc/admin/class_pvtfw_form.php:119
 msgid "Table Header"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:114
+#: inc/admin/class_pvtfw_form.php:123
 msgid "Show header of the variation table"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:118
+#: inc/admin/class_pvtfw_form.php:127
 msgid "Available Options Title"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:122
+#: inc/admin/class_pvtfw_form.php:131
 msgid "Show Available Options Title of the variation table"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:126
+#: inc/admin/class_pvtfw_form.php:135
 msgid "Stop Table Breakdown "
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:130
+#: inc/admin/class_pvtfw_form.php:139
 msgid "Keep table layout same as large screen"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:134
+#: inc/admin/class_pvtfw_form.php:143
 msgid "Horizontal Scrollbar"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:138
+#: inc/admin/class_pvtfw_form.php:147
 msgid "Display a horizontal scrollbar with the table"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:142
+#: inc/admin/class_pvtfw_form.php:151
 msgid "Table Minimum Width"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:219
+#: inc/admin/class_pvtfw_form.php:228
 msgid "Basic Settings"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:220
+#: inc/admin/class_pvtfw_form.php:229
 msgid "Settings for positioning variation table"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:223
+#: inc/admin/class_pvtfw_form.php:232
 msgid "Where to Place Variation Table"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:249
+#: inc/admin/class_pvtfw_form.php:258
 msgid "Select Columns to Show in the Variation Table"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:250
-#: inc/admin/class_pvtfw_settings.php:115
+#: inc/admin/class_pvtfw_form.php:259
+#: inc/admin/class_pvtfw_settings.php:124
 msgid "Are you sure to reset?"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:250
+#: inc/admin/class_pvtfw_form.php:259
 msgid "Reset Columns"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:258
+#: inc/admin/class_pvtfw_form.php:267
 msgid "Available Options Button"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:262
+#: inc/admin/class_pvtfw_form.php:271
 msgid "Show \"Available Options\" button to scroll to the variation table when clicked"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:266
+#: inc/admin/class_pvtfw_form.php:275
 msgid "Available Options Button Text"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:272
-#: inc/frontend/class_pvtfw_available_btn.php:83
+#: inc/admin/class_pvtfw_form.php:281
+#: inc/frontend/class_pvtfw_available_btn.php:92
 msgid "Available options"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:284
+#: inc/admin/class_pvtfw_form.php:293
 msgid "Cart Button Text"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:290
-#: inc/table-parts/content-tbody.php:41
+#: inc/admin/class_pvtfw_form.php:299
+#: inc/table-parts/content-tbody.php:63
 msgid "Add To Cart"
 msgstr ""
 
-#: inc/admin/class_pvtfw_form.php:333
-#: inc/admin/class_pvtfw_form.php:373
+#: inc/admin/class_pvtfw_form.php:342
+#: inc/admin/class_pvtfw_form.php:382
 msgid "Security check"
 msgstr ""
 
-#: inc/admin/class_pvtfw_settings.php:32
+#: inc/admin/class_pvtfw_settings.php:41
 msgid "Product Variation Table"
 msgstr ""
 
-#: inc/admin/class_pvtfw_settings.php:33
+#: inc/admin/class_pvtfw_settings.php:42
 msgid "Variation Table"
 msgstr ""
 
-#: inc/admin/class_pvtfw_settings.php:81
+#: inc/admin/class_pvtfw_settings.php:90
 #: product-variant-table-for-woocommerce.php:417
 msgid "Settings"
 msgstr ""
 
-#: inc/admin/class_pvtfw_settings.php:83
+#: inc/admin/class_pvtfw_settings.php:92
 msgid "Layout"
 msgstr ""
 
-#: inc/admin/class_pvtfw_settings.php:114
+#: inc/admin/class_pvtfw_settings.php:123
 msgid "Save Settings"
 msgstr ""
 
-#: inc/admin/class_pvtfw_settings.php:115
+#: inc/admin/class_pvtfw_settings.php:124
 msgid "Reset All"
 msgstr ""
 
-#: inc/admin/class_pvtfw_styling.php:205
+#: inc/admin/class_pvtfw_styling.php:214
 msgid "Styling"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:36
-#: inc/table-parts/content-tbody.php:174
+#: inc/class_pvtfw_common.php:45
+#: inc/table-parts/content-tbody.php:209
 msgid "Thumbnail"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:37
-#: inc/table-parts/content-tbody.php:182
+#: inc/class_pvtfw_common.php:46
+#: inc/table-parts/content-tbody.php:217
 msgid "SKU"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:38
-#: inc/table-parts/content-tbody.php:198
+#: inc/class_pvtfw_common.php:47
+#: inc/table-parts/content-tbody.php:233
 msgid "Description"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:39
-#: inc/table-parts/content-tbody.php:206
-#: inc/table-parts/content-tbody.php:306
-#: inc/table-parts/content-thead.php:93
+#: inc/class_pvtfw_common.php:48
+#: inc/table-parts/content-tbody.php:241
+#: inc/table-parts/content-tbody.php:341
+#: inc/table-parts/content-thead.php:102
 msgid "Attributes"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:40
-#: inc/table-parts/content-tbody.php:214
+#: inc/class_pvtfw_common.php:49
+#: inc/table-parts/content-tbody.php:249
 msgid "Dimensions"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:41
-#: inc/table-parts/content-tbody.php:222
+#: inc/class_pvtfw_common.php:50
+#: inc/table-parts/content-tbody.php:257
 msgid "Weight"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:42
-#: inc/table-parts/content-tbody.php:230
+#: inc/class_pvtfw_common.php:51
+#: inc/table-parts/content-tbody.php:265
 msgid "Stock"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:43
-#: inc/table-parts/content-tbody.php:190
+#: inc/class_pvtfw_common.php:52
+#: inc/table-parts/content-tbody.php:225
 msgid "Price"
 msgstr ""
 
 #. translators: %s is replaced with the product name or quantity text
-#: inc/class_pvtfw_common.php:44
-#: inc/compatibility.php:226
-#: inc/compatibility.php:296
-#: inc/table-parts/content-tbody.php:238
-#: inc/table-parts/content-tbody.php:334
+#: inc/class_pvtfw_common.php:53
+#: inc/compatibility.php:235
+#: inc/compatibility.php:305
+#: inc/table-parts/content-tbody.php:273
+#: inc/table-parts/content-tbody.php:369
 msgid "Quantity"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:45
-#: inc/table-parts/content-tbody.php:246
-#: inc/table-parts/content-tbody.php:375
-#: inc/table-parts/content-thead.php:90
+#: inc/class_pvtfw_common.php:54
+#: inc/table-parts/content-tbody.php:281
+#: inc/table-parts/content-tbody.php:410
+#: inc/table-parts/content-thead.php:99
 msgid "Action"
 msgstr ""
 
-#: inc/class_pvtfw_common.php:119
+#: inc/class_pvtfw_common.php:128
 msgid "New"
 msgstr ""
 
-#: inc/compatibility.php:32
+#: inc/compatibility.php:41
 msgid "Item"
 msgstr ""
 
-#: inc/compatibility.php:35
+#: inc/compatibility.php:44
 msgid "Items"
 msgstr ""
 
 #. translators: %s is replaced with the product name or quantity text
-#: inc/compatibility.php:226
-#: inc/compatibility.php:296
+#: inc/compatibility.php:235
+#: inc/compatibility.php:305
 msgid "%s quantity"
 msgstr ""
 
-#: inc/compatibility.php:261
-#: inc/compatibility.php:328
+#: inc/compatibility.php:270
+#: inc/compatibility.php:337
 msgid "Product quantity"
 msgstr ""
 
-#: inc/compatibility.php:363
+#: inc/compatibility.php:372
 msgid "In Stock"
 msgstr ""
 
-#: inc/compatibility.php:387
+#: inc/compatibility.php:396
 msgid "Out of Stock"
 msgstr ""
 
-#: inc/frontend/class_pvtfw_available_btn.php:59
+#: inc/frontend/class_pvtfw_available_btn.php:68
 msgid "This product is currently out of stock and unavailable."
 msgstr ""
 
-#: inc/frontend/class_pvtfw_print_table.php:75
-#: inc/frontend/class_pvtfw_print_table.php:215
+#: inc/frontend/class_pvtfw_print_table.php:84
+#: inc/frontend/class_pvtfw_print_table.php:224
 msgid "Available Options"
 msgstr ""
 
-#: inc/table-parts/content-thead.php:110
+#: inc/table-parts/content-thead.php:119
 msgid "subtotal"
 msgstr ""
 
-#: inc/table-parts/content-thead.php:111
+#: inc/table-parts/content-thead.php:120
 msgid "SubTotal"
 msgstr ""
 

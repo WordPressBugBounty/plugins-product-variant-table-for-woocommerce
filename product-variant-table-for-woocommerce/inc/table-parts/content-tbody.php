@@ -1,6 +1,15 @@
 <?php
 
 	/**
+	*====================================================
+	* Exit if accessed directly
+	*====================================================
+	**/
+	if (!defined('ABSPATH')) {
+	    exit;
+	}
+
+	/**
 	 * ====================================================
 	 * Process table data for table body
 	 * ====================================================
@@ -13,8 +22,21 @@
 			 * Initialization Start
 			 */
 			
-			$handle = new WC_Product_Variable($product_id);
-			$variations = $handle->get_children();
+			$product = wc_get_product( $product_id );
+
+			if ( !$product && !$product->is_type( 'variable' ) ) {
+				return array();
+			}
+
+			$variations = $product->get_children();
+
+			/**
+			 * Preload all post meta for the variation IDs in a single query
+			 * to prevent multiple database calls inside the loop (performance optimization)
+			 * 
+			 * @since 1.9.2
+			 */
+			update_meta_cache('post', $variations);
 
 			$default_columns = PVTFW_COMMON::get_default_columns();
 			$columns_labels = PVTFW_COMMON::get_columns_labels();
@@ -42,7 +64,7 @@
 
 			foreach ($variations as $value) {
 
-				$single_variation = new WC_Product_Variation($value);
+				$single_variation = wc_get_product($value);
 
 				// Not collect some variation data
 				if( apply_filters( 'pvtfw_skip_some_variation', false, $single_variation ) ){
@@ -52,6 +74,12 @@
 				if( $single_variation->variation_is_visible() ):
 
 					$variant_id = $single_variation->get_id();
+					$variant_name = $single_variation->get_name();
+
+					// Check price and availability once
+				    $price_availability = PVTFW_COMMON::check_price_availability($single_variation);
+				    $price_value = $price_availability['price'];
+				    $availability_value = $price_availability['variation_availability'];
 
 					// Variation Thumbnail
 					$thumbnail = "<figure class='item'>".wp_get_attachment_image( $single_variation->get_image_id(), array('100','100'), false, array( 'class' => 'pvtfw_variant_table_img_size' ) )."</figure>";
@@ -101,8 +129,8 @@
 						'max_value'    => apply_filters( 'pvtfw_qtyargs_max_value', $single_variation->get_max_purchase_quantity(), $single_variation ),
 						'input_value'  => apply_filters( 'pvtfw_qtyargs_input_value', $single_variation->get_min_purchase_quantity(), $single_variation ),
 						'input_id'     => $variant_id,
-						'price'        => PVTFW_COMMON::check_price_availability($single_variation)['price'], // Custom parameter for hidden price display
-						'availability' => PVTFW_COMMON::check_price_availability($single_variation)['variation_availability'], // Custom parameter for hidden availability,
+						'price'        => $price_value, // Custom parameter for hidden price display
+						'availability' => $availability_value, // Custom parameter for hidden availability,
 						'layout'       => $qty_layout
 					);
 					$options_qty_layout = wp_parse_args( $qtyargs, $defaults );
@@ -134,7 +162,7 @@
 						'cart_url'          => $cart_url, 
 						'product_url'       => $product_url, 
 						'variant_id'        => $variant_id, 
-						'product_name'		=> $single_variation ? $single_variation->get_name() : '',
+						'product_name'		=> $single_variation ? $variant_name : '',
 						'stock_status'      => $single_variation->get_stock_status(),
 						'text'              => $text,
 						'availability_html' => wc_get_stock_html( $single_variation ),
@@ -161,7 +189,14 @@
 				}
 			}
 
-			$latest = apply_filters( 'pvtfw_options_array', $latest, $columns, $variations, $qty_layout, $product_id, $cart_url, $product_url, $text );
+			/**
+			 * Options Array
+			 *
+			 * @modified in 1.9.2
+			 * - Passing $single_variation as a parameter
+			 */
+			$latest = apply_filters( 'pvtfw_options_array', $latest, $columns, $variations, $qty_layout, $product_id, $cart_url, $product_url, $text, $single_variation );
+
 			$mapped = [];
 
 			foreach ($latest as $key1 => $each_key_data ) {
