@@ -62,9 +62,21 @@
 			 */
 			$text = !$btn_text ? esc_html__('Add To Cart', 'product-variant-table-for-woocommerce') : $btn_text;
 
+			/**
+			 * A blank array to keep $single_variation data.
+			 * @since 1.9.3
+			 */
+			$single_variation_data = array();
+
 			foreach ($variations as $value) {
 
 				$single_variation = wc_get_product($value);
+
+				/**
+				 * Keeping $single_variation data using the variation ID.
+				 * @since 1.9.3
+				 */
+				$single_variation_data[$value] = wc_get_product($value);
 
 				// Not collect some variation data
 				if( apply_filters( 'pvtfw_skip_some_variation', false, $single_variation ) ){
@@ -193,9 +205,14 @@
 			 * Options Array
 			 *
 			 * @modified in 1.9.2
-			 * - Passing $single_variation as a parameter
+			 * - Passing $single_variation  as a parameter
+			 * - [It only sends the last value of $single_variation as it is not inside the loop]
+			 * 
+			 * @modified in 1.9.3
+			 * - Passing $single_variation_data  as a parameter
+			 * - It passes all the single variation object as it stores as an array.
 			 */
-			$latest = apply_filters( 'pvtfw_options_array', $latest, $columns, $variations, $qty_layout, $product_id, $cart_url, $product_url, $text, $single_variation );
+			$latest = apply_filters( 'pvtfw_options_array', $latest, $columns, $variations, $qty_layout, $product_id, $cart_url, $product_url, $text, $single_variation_data );
 
 			$mapped = [];
 
