@@ -7,7 +7,7 @@ Author: WPXtension
 Author URI: https://wpxtension.com/
 Text Domain: product-variant-table-for-woocommerce
 Domain Path: /languages
-Version: 1.9.3
+Version: 1.9.4
 Requires at least: 4.7.0
 Requires PHP: 5.6.20
 WC requires at least: 3.0.0
@@ -32,15 +32,10 @@ if (!defined('ABSPATH')) {
  * ====================================================
  */
 
-define("PVTFW_VARIANT_TABLE_VERSION", '1.9.3');
-define("PVTFW_REQUIRED_PRO_VERSION", '1.9.3');
+define("PVTFW_VARIANT_TABLE_VERSION", '1.9.4');
+define("PVTFW_REQUIRED_PRO_VERSION", '1.9.4');
 define("PVTFW_DIR", plugin_dir_path(__FILE__) );
 define("PVTFW_FILE", plugin_basename(__FILE__));
-
-if ( ! defined( 'PVTFW_MAYBE_PRO_PLUGIN_FILE' ) ) {
-	$pvtfw_maybe_pro_plugin_file = sprintf('%s/product-variant-table-for-woocommerce-pro/product-variant-table-for-woocommerce-pro.php', wp_normalize_path( WP_PLUGIN_DIR ));
-	define( 'PVTFW_MAYBE_PRO_PLUGIN_FILE', $pvtfw_maybe_pro_plugin_file );
-}
 
 /**
  * ====================================================
@@ -477,55 +472,4 @@ function pvtfw_hpos_compatibility() {
 }
 
 add_action( 'before_woocommerce_init', 'pvtfw_hpos_compatibility' );
-
-// Plugin check
-function pvtfw_version_check_companion(){
-	return defined( 'PVTFW_PRO' ) && ( version_compare( PVTFW_PRO, PVTFW_REQUIRED_PRO_VERSION ) >= 0 );
-}
-
-function pvtfw_deactivate_companion(){
-	if ( pvtfw_version_check_companion() ) {
-		return;
-	}
-
-	if ( ! function_exists( 'is_plugin_active' ) ) {
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-	}
-
-	if ( is_plugin_active( 'product-variant-table-for-woocommerce-pro/product-variant-table-for-woocommerce-pro.php' ) ) {
-		
-		unset($_GET['activate']);
-
-		add_action( 'admin_notices', 'pvtfw_companion_error_msg' );
-		
-		// Deactivate the plugin silently, Prevent deactivation hooks from running.
-		deactivate_plugins( 'product-variant-table-for-woocommerce-pro/product-variant-table-for-woocommerce-pro.php', true );
-	}
-}
-add_action( 'plugins_loaded',  'pvtfw_deactivate_companion');
-
-function pvtfw_companion_error_msg(){
-	/* translators: %1$s: Main wrapper start, %2$s: Main wrapper end, %3$s: Bold wrapper start, %4$s: Bold wrapper end, %5$s: Pro Plugin Version */
-	printf(esc_html__('%1$sYou are running an older version of %3$s"PVT - Product Variation Table for WooCommerce - Pro"%4$s. Please upgrade to %3$s %5$s %4$s or higher.%2$s', 'product-variant-table-for-woocommerce'), 
-		'<div class="error notice"><p>',
-		'</p></div>',
-		'<b>',
-		'</b>',
-		esc_html(constant( 'PVTFW_REQUIRED_PRO_VERSION' )) 
-	);
-}
-
-// Meta notice
-add_action( 'after_plugin_row_meta', 'pvtfw_companion_meta_notice', 10, 2 );
-function pvtfw_companion_meta_notice( string $plugin_file, array $plugin_data) {
-	if ( plugin_basename( PVTFW_MAYBE_PRO_PLUGIN_FILE ) === $plugin_file ) {
-		$current_version = $plugin_data['Version'];
-		if (  version_compare( $current_version, constant( 'PVTFW_REQUIRED_PRO_VERSION' ), '<' )  ) {
-			/* translators: %s: Pro Plugin Version */
-			$notice_text = 	 sprintf(esc_html__('You are running an older version of "PVT - Product Variation Table for WooCommerce - Pro". Please upgrade to %s or higher.', 'product-variant-table-for-woocommerce'), esc_html(constant( 'PVTFW_REQUIRED_PRO_VERSION' )));
-
-			printf( '<p style="color: darkred"><span class="dashicons dashicons-warning"></span> <strong>%s</strong></p>', esc_html($notice_text) );
-		}
-	}
-}
 

@@ -372,12 +372,28 @@
 							// Getting attribute name (with full arrray) using get_term by passing slug
 							$term = get_term_by( 'slug', $val, wc_sanitize_taxonomy_name( stripslashes($key3) ) );
 							// If term is not empty then print attribute label else product page inputted vairation name
+
+							/**
+							 * For filter data
+							 * 
+							 * - Replace attribute_ with '' from the attr name
+							 * - Replace pa_ with '' from the attr name
+							 * - Replace _ with ' '(space) from the attr name
+							 * 
+							 * @since 1.9.4
+							 */
+							$data_attrname = str_replace(
+							    ['attribute_', 'pa_', '_'],
+							    ['', '', ' '],
+							    $key3
+							);
+
 							if(!empty($term)){
-								echo wp_kses_post( apply_filters( "pvtfw_global_attribute_terms", "<td data-title='{$taxonomy_name}'>{$term->name}</td>", $term, $taxonomy_name ) );
+								echo wp_kses_post( apply_filters( "pvtfw_global_attribute_terms", "<td data-title='{$taxonomy_name}' data-attrname='{$data_attrname}' data-slug='{$val}'>{$term->name}</td>", $term, $taxonomy_name ) );
 								// Structure of id is {column title}-{product id}-{generated id}-{another generated id}
 							}
 							else{
-								echo wp_kses_post( apply_filters( "pvtfw_custom_attribute_terms", "<td data-title='{$taxonomy_name}'>{$val}</td>", $val, $taxonomy_name ) );
+								echo wp_kses_post( apply_filters( "pvtfw_custom_attribute_terms", "<td data-title='{$taxonomy_name}' data-attrname='{$data_attrname}' data-slug='{$val}'>{$val}</td>", $val, $taxonomy_name ) );
 								// Structure of id is {column title}-{product id}-{generated id}-{another generated id}
 							}
 							

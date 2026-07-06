@@ -5,7 +5,7 @@ Tags: woocommerce, variations, table, variations table, woocommerce variable
 Requires at least: 4.7.0
 Tested up to: 7.0
 Requires PHP: 5.6.20
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -180,6 +180,11 @@ add_filter( 'pvtfw_print_qty_field', function( $value ){ return woocommerce_quan
 
 
 == Changelog ==
+
+= 1.9.4 [06-07-2026] Monday =
+* Update- Optimize plugin main file code.
+* Update- content-tbody.php file.
+* Compatibility: WooCommerce 10.9.3.
 
 = 1.9.3 [12-04-2026] Sunday =
 * Update- content-tbody.php file.
